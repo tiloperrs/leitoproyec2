@@ -6,12 +6,22 @@ from db.mongo_client import MongoDB
 
 @Client.on_callback_query(filters.regex("auth"))
 def gates_coman(client, message):
-    try:
-        querY = MongoDB().query_user(int(message.from_user.id))
-        
-        message.edit_message_text(
-            "AUTH FUNCIONANDO",
-            reply_markup=atrasgt(message.from_user.id)
-        )
-    except Exception as e:
-        print("ERROR AUTH:", e)
+    # querY = MongoDB().query_user(int(message.from_user.id))
+    message.edit_message_text(
+'''<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
+
+♅ºStripe Auth ( /au )
+♅ºType  - Stripe Auth
+♅ºFormat  - $flw cc|mm|yy|cvc
+♅ºstatus - ( on )
+
+♅ºStripe Auth ( /ar )
+♅ºType  - Stripe Auth
+♅ºFormat - $flw cc|mm|yy|cvc
+♅ºstatus - ( on )
+
+♅ºStripe Auth ( /sb )
+♅º Type  - Stripe Auth
+♅ºFormat - $flw cc|mm|yy|cvc
+♅ºstatus - ( on )
+</b>''',reply_markup=atrasgt(message.from_user.id))
