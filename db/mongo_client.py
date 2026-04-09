@@ -6,12 +6,11 @@ import requests
 import os
 class MongoDB(object):
     def __init__(self):
-        client = pymongo.MongoClient(os.getenv("MONGO_URL"))
+        self.client = pymongo.MongoClient(os.getenv("MONGO_URL"))
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
         self.key = self.db["keys"]
-
 
     def query_user(self, id:int=None):
         if id:return self.user.find_one({"id":id})
