@@ -9,7 +9,7 @@ from db.mongo_client import MongoDB
 def gates_coman(client, m):
     querY = MongoDB().query_user(int(m.from_user.id))
     m.edit_message_text('''
-<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐌𝐚𝐬𝐬 🍒
+<b> 🍒
 ━━━━━━━━━━━━━━━━
 ºpayflow avs Charged ( /mass )
 ºType  - Payflow avs
