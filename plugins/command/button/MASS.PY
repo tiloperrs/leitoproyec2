@@ -9,14 +9,13 @@ from db.mongo_client import MongoDB
 def gates_coman(client, m):
     querY = MongoDB().query_user(int(m.from_user.id))
     m.edit_message_text('''<b> 
-
 payflow avs Charged /mass 
-Type  - Payflow avs
-Format - $flw cc|mm|yy|cvc
-status -  on 
+Type   Payflow avs
+Format  $flw cc|mm|yy|cvc
+status   on 
 
 payflow Charged  /mass2 
-Type  - Payflow Charged
-Format - $flw cc|mm|yy|cvc
-status -  on 
+Type   Payflow Charged
+Format  $flw cc|mm|yy|cvc
+status   on 
 </b>''',reply_markup=atrasgt(m.from_user.id))
