@@ -3,7 +3,7 @@ from paquetes.plantillas import atrasgt
 from paquetes.plantillas import tipogt
 from pyrogram.types import InlineKeyboardButton,InlineKeyboardMarkup
 from db.mongo_client import MongoDB
-@Client.on_callback_query(filters.regex("auth"), group=10)
+@Client.on_callback_query(filters.regex("^auth"))
 def gates_coman(client, m):
     m.edit_message_text(
         """<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
