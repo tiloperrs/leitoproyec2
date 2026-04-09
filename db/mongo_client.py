@@ -3,10 +3,10 @@ import datetime
 import time
 import threading
 import requests
-
+import os
 class MongoDB(object):
     def __init__(self):
-
+        client = pymongo.MongoClient(os.getenv("MONGO_URL"))
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
@@ -102,7 +102,7 @@ class MongoDB(object):
 
 
 def expulse_user():
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    client = pymongo.MongoClient(os.getenv("MONGO_URL"))
     db = client["bot"]
     collection = db["user"]
     collection1 = db["group"]
