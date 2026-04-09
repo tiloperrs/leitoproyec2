@@ -3,14 +3,15 @@ import datetime
 import time
 import threading
 import requests
-import os
+
 class MongoDB(object):
     def __init__(self):
-        client = pymongo.MongoClient(os.getenv("mongodb://mongo:iIEsbPLtmVMnNfKnoLSGpazzwRDGEnCp@mongodb.railway.internal:27017"))
+        self.client = pymongo.MongoClient("mongodb://localhost:27017/")
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
         self.key = self.db["keys"]
+
 
     def query_user(self, id:int=None):
         if id:return self.user.find_one({"id":id})
@@ -53,9 +54,7 @@ class MongoDB(object):
         query = MongoDB().query_user(id)
         credits = query['credits'] + crdit
         self.user.update_one({"id": id}, {"$set": {"credits": credits}})
-
- 
-        return True, "Créditos descontados"      
+        
     def update_group(self,idw,dias):
         tiempo_futuro = datetime.datetime.now() + datetime.timedelta(days=dias)
         times = tiempo_futuro.timestamp()
@@ -101,7 +100,7 @@ class MongoDB(object):
 
 
 def expulse_user():
-    client = pymongo.MongoClient(os.getenv("mongodb://mongo:iIEsbPLtmVMnNfKnoLSGpazzwRDGEnCp@mongodb.railway.internal:27017"))
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
     db = client["bot"]
     collection = db["user"]
     collection1 = db["group"]
@@ -112,13 +111,13 @@ def expulse_user():
         for user in collection1.find({"dias": {"$lt": time.time()}}):
             MongoDB().delete_chat(user['id'])
 
-            url = f'https://api.telegram.org/bot6467648381:AAHhtidsajnPawjWv33aCAZf7Hpyw74MT6M/sendMessage'
+            url = f'https://api.telegram.org/bot8335214615:AAGgLAnmfC1WbXrtuUmCH3T7a5AqnIuTBsM/sendMessage'
             params = {'chat_id': user['id'],'text': '<b>Se acabo tu acceso al grupo de usar nuestro bot.❗️</b>','parse_mode': 'HTML'}
             
             requests.post(url=url, params=params)
 
-            url = f'https://api.telegram.org/bot6467648381:AAHhtidsajnPawjWv33aCAZf7Hpyw74MT6M/sendMessage'
-            params = {'chat_id': -1002058267689,'text': f'<b>Se le acabo el acceso de dias al chat con id :( {user["id"]}  )❗️</b>','parse_mode': 'HTML'}
+            url = f'https://api.telegram.org/bot8335214615:AAGgLAnmfC1WbXrtuUmCH3T7a5AqnIuTBsM/sendMessage'
+            params = {'chat_id': -1003122650352,'text': f'<b>Se le acabo el acceso de dias al chat con id :( {user["id"]}  )❗️</b>','parse_mode': 'HTML'}
             
             requests.post(url=url, params=params)
     
@@ -128,13 +127,13 @@ def expulse_user():
             collection.update_one({"_id": user["_id"]},{"$set": {"plan": "free","antispam": 40,"key": None,"since": None}})
             collection1.delete_one({ "id": user['id'] })     
             
-            url = f'https://api.telegram.org/bot6467648381:AAHhtidsajnPawjWv33aCAZf7Hpyw74MT6M/sendMessage'
+            url = f'https://api.telegram.org/bot8335214615:AAGgLAnmfC1WbXrtuUmCH3T7a5AqnIuTBsM/sendMessage'
             params = {'chat_id': user['id'],'text': '<b>Se acabo tu plan premium con nuestro bot.❗️</b>','parse_mode': 'HTML'}
             
             requests.post(url=url, params=params)
 
-            url = f'https://api.telegram.org/bot6467648381:AAHhtidsajnPawjWv33aCAZf7Hpyw74MT6M/sendMessage'
-            params = {'chat_id': -1002058267689,'text': f'<b>Se le acabo el plan premium al usuario( {user["id"]}  )❗️</b>','parse_mode': 'HTML'}
+            url = f'https://api.telegram.org/bot8335214615:AAGgLAnmfC1WbXrtuUmCH3T7a5AqnIuTBsM/sendMessage'
+            params = {'chat_id': -1003122650352,'text': f'<b>Se le acabo el plan premium al usuario( {user["id"]}  )❗️</b>','parse_mode': 'HTML'}
             
             requests.post(url=url, params=params)
 
