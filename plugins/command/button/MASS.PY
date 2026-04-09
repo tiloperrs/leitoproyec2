@@ -11,14 +11,14 @@ def gates_coman(client, m):
     m.edit_message_text('''
 <b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐌𝐚𝐬𝐬 🍒
 ━━━━━━━━━━━━━━━━
-♅ºpayflow avs Charged ( /mass )
-♅ºType  - Payflow avs
-♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - (✅ on )
+ºpayflow avs Charged ( /mass )
+ºType  - Payflow avs
+ºFormat - $flw cc|mm|yy|cvc
+ºstatus - (✅ on )
 ━━━━━━━━━━━━━━━━
-♅ºpayflow Charged ( /mass2 )
-♅ºType  - Payflow Charged
-♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - (✅ on )
-━━━━━━━━━━━━━━━━
+ºpayflow Charged ( /mass2 )
+ºType  - Payflow Charged
+ºFormat - $flw cc|mm|yy|cvc
+ºstatus - (✅ on )
+━━━━━━━━━━━━━━━━</b>
 ''',reply_markup=atrasgt(m.from_user.id))

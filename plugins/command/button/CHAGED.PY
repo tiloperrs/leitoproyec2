@@ -9,4 +9,4 @@ def gates_coman(client, message):
     message.edit_message_text('''
 <b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐜𝐡𝐚𝐫𝐠𝐞𝐝 🍫
 
-''',reply_markup=atrasgt(message.from_user.id))
+</b>''',reply_markup=atrasgt(message.from_user.id))
