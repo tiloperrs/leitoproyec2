@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from paquetes.plantillas import atrasgt
 @Client.on_callback_query(filters.regex("auth"))
-def tool_com(client, m):
+def gates_com(client, m):
     m.edit_message_text('''
 <b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
 
