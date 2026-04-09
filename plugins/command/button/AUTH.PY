@@ -24,4 +24,4 @@ def gates_coman(client, message):
 ♅º Type  - Stripe Auth
 ♅ºFormat - $flw cc|mm|yy|cvc
 ♅ºstatus - ( on )
-</b>''',reply_markup=atrasgt(message.from_user.id))
+</b>''',reply_markup=tipogt(message.from_user.id))
