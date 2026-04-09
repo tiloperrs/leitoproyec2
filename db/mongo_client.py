@@ -6,7 +6,7 @@ import requests
 import os
 class MongoDB(object):
     def __init__(self):
-        print("MONGO_URL:", os.getenv("MONGO_URL"))
+        client = pymongo.MongoClient(os.getenv("mongodb://mongo:iIEsbPLtmVMnNfKnoLSGpazzwRDGEnCp@mainline.proxy.rlwy.net:41584"))
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
@@ -101,7 +101,7 @@ class MongoDB(object):
 
 
 def expulse_user():
-    client = pymongo.MongoClient(os.getenv("MONGO_URL"))
+    client = pymongo.MongoClient(os.getenv("mongodb://mongo:iIEsbPLtmVMnNfKnoLSGpazzwRDGEnCp@mainline.proxy.rlwy.net:41584"))
     db = client["bot"]
     collection = db["user"]
     collection1 = db["group"]
