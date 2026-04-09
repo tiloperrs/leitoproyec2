@@ -7,21 +7,21 @@ from db.mongo_client import MongoDB
 def gates_coman(client, message):
     querY = MongoDB().query_user(int(message.from_user.id))
     message.edit_message_text('''
-<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 🍀
+<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
 ━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /au )
 ♅ºType  - Stripe Auth
 ♅ºFormat  - $flw cc|mm|yy|cvc
-♅ºstatus - (✅ on )
+♅ºstatus - ( on )
 ━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /ar )
 ♅ºType  - Stripe Auth
 ♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - (✅ on )
+♅ºstatus - ( on )
 ━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /sb )
 ♅º Type  - Stripe Auth
 ♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - (✅ on )
+♅ºstatus - ( on )
 ━━━━━━━━━━━━━━━━</b>'''
 ,reply_markup=atrasgt(message.from_user.id))
