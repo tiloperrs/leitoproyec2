@@ -6,7 +6,7 @@ import requests
 import os
 class MongoDB(object):
     def __init__(self):
-        self.client = pymongo.MongoClient(os.getenv("MONGO_URL"))
+        print("MONGO_URL:", os.getenv("MONGO_URL"))
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
