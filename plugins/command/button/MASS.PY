@@ -20,5 +20,4 @@ def gates_coman(client, m):
 ºType  - Payflow Charged
 ºFormat - $flw cc|mm|yy|cvc
 ºstatus - (✅ on )
-━━━━━━━━━━━━━━━━</b>
-''',reply_markup=atrasgt(m.from_user.id))
+━━━━━━━━━━━━━━━━</b>''',reply_markup=atrasgt(m.from_user.id))

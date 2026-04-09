@@ -11,4 +11,4 @@ def gates_coman(client, message):
 ⨳ 𝐆𝐚𝐭𝐞𝐰𝐚𝐲𝐬 𝐚𝐜𝐭𝐢𝐯𝐨𝐬 (5) ✅
 ⨳ 𝐆𝐚𝐭𝐞𝐰𝐚𝐲𝐬 𝐝𝐞𝐜𝐥𝐢𝐧𝐞𝐝 (0) ❌
 ━━━━━━━━━━━━━━━━
-''',reply_markup=tipogt(message.from_user.id))
+</b>''',reply_markup=tipogt(message.from_user.id))
