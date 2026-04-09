@@ -1,9 +1,10 @@
 from pyrogram import Client, filters
 from paquetes.plantillas import atrasgt
+
 @Client.on_callback_query(filters.regex("auth"))
 def gates_coman(client, m):
-    m.edit_message_text('''
-<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
+    m.edit_message_text(
+        """<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐚𝐮𝐭𝐡 
 
 ♅ºStripe Auth ( /au )
 ♅ºType  - Stripe Auth
@@ -19,4 +20,7 @@ def gates_coman(client, m):
 ♅º Type  - Stripe Auth
 ♅ºFormat - $flw cc|mm|yy|cvc
 ♅ºstatus - ( on )               
-</b>''',reply_markup=atrasgt(m.from_user.id))
+</b>""",
+        parse_mode="html",
+        reply_markup=atrasgt(m.from_user.id)
+    )
