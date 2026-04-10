@@ -11,7 +11,7 @@ def commd(user_id):
 def tipogt(user_id):
     tipogt = InlineKeyboardMarkup([[
 
-                                InlineKeyboardButton(text='AUTH',callback_data=f'aaauth:{user_id}'),
+                                InlineKeyboardButton(text='AUTHH',callback_data=f'aaauth:{user_id}'),
                                 InlineKeyboardButton(text='CHARGED',callback_data=f'charged:{user_id}'),
                                 InlineKeyboardButton(text='MASSS',callback_data=f'gtmass:{user_id}',),],[
                                 InlineKeyboardButton(text='𝘼𝙩𝙧𝙖𝙨',callback_data=f'atras:{user_id}',)]])
