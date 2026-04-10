@@ -99,9 +99,8 @@ class MongoDB(object):
         elif query['role'] == 'co-funders': return True
         else: return False
 
-
 def expulse_user():
-    client = pymongo.MongoClient("MONGO_URL")
+    client = pymongo.MongoClient(os.getenv("MONGO_URL"))
     db = client["bot"]
     collection = db["user"]
     collection1 = db["group"]
