@@ -2,9 +2,6 @@
 from pyrogram import Client
 from pyrogram.types import CallbackQuery
 import logging , os 
-import plugins.command.button.auth
-import plugins.command.button.mass
-
 class Kiyotaka_chk():
     def __init__(self):
         self.app = Client(
