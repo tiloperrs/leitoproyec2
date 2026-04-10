@@ -6,14 +6,12 @@ import requests
 import os
 class MongoDB(object):
     def __init__(self):
-        mongo_url = os.getenv("MONGO_URL")
-        print("MONGO_URL:", mongo_url)  # debug
-
-        self.client = pymongo.MongoClient(mongo_url)
+        self.client = pymongo.MongoClient(os.getenv("MONGO_URL"))
         self.db = self.client["bot"]
         self.user = self.db["user"]
         self.group = self.db["group"]
         self.key = self.db["keys"]
+
 
 
     def query_user(self, id:int=None):
@@ -54,7 +52,7 @@ class MongoDB(object):
         self.user.update_one({"id": id}, {"$set": {"antispam": ant}})
 
     def add_crdits(self, id,crdit):
-        query = MongoDB().query_user(id)
+        query = self.query_user(id)
         credits = query['credits'] + crdit
         self.user.update_one({"id": id}, {"$set": {"credits": credits}})
         
@@ -88,7 +86,7 @@ class MongoDB(object):
         return True
         
     def admin(self,id):
-        query = MongoDB().query_user(id)
+        query = self.query_user(id)
         if query['role'] == 'admin': return True
         if query['role'] == 'seller': return True
         elif query['role'] == 'owner': return True
@@ -96,15 +94,14 @@ class MongoDB(object):
         else: return False
 
     def owner(self,id):
-        query = MongoDB().query_user(id)
+        query = self.query_user(id)
         if query['role'] == 'owner': return True
         elif query['role'] == 'co-funders': return True
         else: return False
 
 
 def expulse_user():
-    mongo_url = os.getenv("MONGO_URL")
-    client = pymongo.MongoClient(mongo_url)
+    client = pymongo.MongoClient("MONGO_URL")
     db = client["bot"]
     collection = db["user"]
     collection1 = db["group"]
