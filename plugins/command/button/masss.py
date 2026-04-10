@@ -8,6 +8,13 @@ def gates_coman(client, m):
     print("CLICK CHARGED")
     # querY = MongoDB().query_user(int(message.from_user.id))
     m.edit_message_text('''
-<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 𝐜𝐡𝐚𝐫𝐠𝐞𝐝 🍫
+<b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 mass 🍫
+payflow avs Charged /mass 
+Type   Payflow avs
+Format  $flw cc|mm|yy|cvc
+status   on 
 
+payflow Charged  /mass2 
+Type   Payflow Charged
+Format  $flw cc|mm|yy|cvc
 </b>''',reply_markup=atrasgt(m.from_user.id))
