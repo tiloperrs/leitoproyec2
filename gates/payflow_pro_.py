@@ -37,6 +37,7 @@ class payflow_pro:
             if self.ccs[0].startswith("3"): self.brand = "AE"
             elif self.ccs[0].startswith("5"): self.brand = "MC"
             session = requests.Session()
+            session.proxies = {"http":"http://mfqmytsx-rotate:fvztryjsvwhy@p.webshare.io:80","https":"http://mfqmytsx-rotate:fvztryjsvwhy@p.webshare.io:80"}
             Agent = UserAgent().random
             guid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
             muid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
