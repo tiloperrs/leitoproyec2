@@ -18,16 +18,11 @@ def mc(client, m):
     if antispam(querY['antispam'],m):return
     
     
-    tarjetas = []
-    for l in texto.splitlines():
-        ccs = find_cards(l)
-        if ccs and len(ccs) == 4:
-            tarjetas.append(ccs)
-        if len(tarjetas) == 10:
-            break
+    if m.reply_to_message:ccs = find_cards(m.reply_to_message.text)
+    else: ccs = find_cards(m.text)
     if not m.reply_to_message and len(m.text.split()) == 1:
         return m.reply("""
-𝐬𝐭𝐫𝐢𝐩𝐞 𝐚𝐮𝐭𝐡 ⚔
+Payflow 18.08 ⚔
 ━━━━━━━━━━━━━━━━ 
 ➢º𝐠𝐚𝐭𝐞𝐰𝐚𝐲𝐬:𝐚𝐜𝐭𝐢𝐯𝐨 ✅
 ➢º𝐔𝐬𝐨 𝐜𝐨𝐫𝐫𝐞𝐜𝐭𝐨:/𝐚𝐮 𝐜𝐜|𝐦𝐦|𝐲𝐲|𝐜𝐯𝐯
@@ -35,26 +30,26 @@ def mc(client, m):
 𝐮𝐬𝐞𝐫:𝐩𝐫𝐞𝐦𝐢𝐮𝐦 👀
 """)
 
-    for i, ccs in enumerate(tarjetas, start=1):
-        cc = "|".join(ccs)
-    x = get_bin_info(cc[:6])
+    cc_com = '{}|{}|{}|{}'.format(ccs[0], ccs[1], ccs[2], ccs[3])
+    
+    x = get_bin_info(cc_com[:6])
 
     new = m.reply(f'''
-⚜ 𝐒𝐭𝐫𝐢𝐩𝐞 𝐀𝐮𝐭𝐡 ⚜  
+⚜ Payflow 18.08 ⚜  
 ━━━━━━━━━━━━━━━━           
-♅º𝐂𝐚𝐫𝐝: {𝐜𝐜} 🚀
+♅º𝐂𝐚𝐫𝐝: {𝐜𝐜_𝐜𝐨𝐦} 🚀
 ♅º𝐒𝐭𝐚𝐭𝐮𝐬: 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠... ❄️ 
 ♅º𝐔𝐬𝐞𝐫: {𝐦.𝐟𝐫𝐨𝐦_𝐮𝐬𝐞𝐫.𝐟𝐢𝐫𝐬𝐭_𝐧𝐚𝐦𝐞}
 ━━━━━━━━━━━━━━━━
 ♅º𝐃𝐮𝐞ñ𝐨: @𝐥𝐞𝐢𝐭𝐨𝟏𝟑𝟐𝟒''')
     
-    chk = payflowwo().main(cc)
+    chk = payflowwo(cc_com).main()
 
     fin = time.time()
     texto = f'''
-𝐒𝐭𝐫𝐢𝐩𝐞 𝐀𝐮𝐭𝐡
+Payflow 18.08
 ━━━━━━━━━━━━━━━━  
-↬º𝐂𝐜: <code>{cc}</code>
+↬º𝐂𝐜: <code>{cc_com}</code>
 ↬º𝐒𝐭𝐚𝐭𝐮𝐬: {chk[0]}
 ↬º𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: <code>{chk[1]}</code>
 ━━━━━━━━━━━━━━━━  

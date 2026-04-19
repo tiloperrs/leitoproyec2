@@ -21,10 +21,10 @@ def paserX(data, first, last):
 
 @dataclass
 class payflowwo:
-    def main(self, card):
+    def main(self, tarjeta):
         try:
-            self.card = card
-            self.ccs = card.split('|')
+            self.card = tarjeta
+            self.ccs = tarjeta.split('|')
             if self.ccs[0].startswith("4"): self.brand = "VI"
             if self.ccs[0].startswith("3"): self.brand = "AE"
             elif self.ccs[0].startswith("5"): self.brand = "MC"
