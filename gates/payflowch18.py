@@ -22,7 +22,7 @@ def paserX(data, first, last):
 @dataclass
 class payflowwo:
     def __init__(self, tarjeta):
-        try:
+
             partes = tarjeta.split("|")
         
             self.tarjeta = tarjeta
@@ -31,15 +31,16 @@ class payflowwo:
                 self.mes = partes[1]
                 self.ano = partes[2]
                 self.cvv = partes[3]
+
+    def main(self):
+        try:
+            self.session = Session()
             def generar_correo():
                 return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
             CorreoRand = generar_correo()
 
             username = f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}"
             Agent = UserAgent().random
-
-            self.session = Session()
-            
             headers = {
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
                 'accept-language': 'es-ES,es;q=0.6',
