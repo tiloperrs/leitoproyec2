@@ -9,18 +9,20 @@ def gates_coman(client, m):
     # querY = MongoDB().query_user(int(message.from_user.id))
     m.edit_message_text('''
 <b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 auth 🍫
+━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /au )
 ♅ºType  - Stripe Auth
-♅ºFormat  - $flw cc|mm|yy|cvc
-♅ºstatus - ( on )
-
+♅ºFormat  - $au cc|mm|yy|cvc
+♅ºstatus -(on ✅)
+━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /ar )
 ♅ºType  - Stripe Auth
-♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - ( on )
-
+♅ºFormat - $ar cc|mm|yy|cvc
+♅ºstatus - (on ✅)
+━━━━━━━━━━━━━━━━
 ♅ºStripe Auth ( /sb )
 ♅º Type  - Stripe Auth
-♅ºFormat - $flw cc|mm|yy|cvc
-♅ºstatus - ( on )
+♅ºFormat - $sb cc|mm|yy|cvc
+♅ºstatus - (on ✅)
+━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))
