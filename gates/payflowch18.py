@@ -21,7 +21,7 @@ def paserX(data, first, last):
 
 @dataclass
 class payflowwo:
-    def main(self, tarjeta):
+    def __init__(self, tarjeta):
         try:
             self.card = tarjeta
             self.ccs = tarjeta.split('|')
