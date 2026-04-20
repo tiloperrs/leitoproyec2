@@ -14,7 +14,9 @@ from fake_useragent import UserAgent
 
 class Autocomplet:
     @classmethod
-
+    def SessionId(self):
+        self.id = str(uuid.uuid4())
+        return self.id
     def cut_str(self, data:str=None, chainOne:str=None, chainTwo:str=None):
 
         try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
@@ -107,8 +109,7 @@ class b35:
             elif "Your payment could not be taken. Please try again or use a different payment method. avs_and_cvv" in msg: return "Approved! ✅"
             elif "Your payment could not be taken. Please try again or use a different payment method. cvv" in msg: return "Approved! ✅"
             else: return 'Declined! ❌', msg 
-        except: return 'Declined! ❌','Declined - Call Issue'
-            
+        except: return 
 #13
             
 """ccs = input('Card: ')
