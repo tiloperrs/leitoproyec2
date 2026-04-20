@@ -101,13 +101,13 @@ class b35:
 
             if '"success":true' in r8.text: return "Approved! 5.79 ✅"
 
-            elif "Your payment could not be taken. Please try again or use a different payment method. Gateway Rejected: avs" in msg: return "Approved! ✅"
+            elif "Your payment could not be taken. Please try again or use a different payment method. Gateway Rejected: avs" in msg: return "Approved! ✅", msg
 
-            elif "Your payment could not be taken. Please try again or use a different payment method. Insufficient Funds" in msg: return "Approved! ✅"
+            elif "Your payment could not be taken. Please try again or use a different payment method. Insufficient Funds" in msg: return "Approved! ✅", msg
 
-            elif "Your payment could not be taken. Please try again or use a different payment method. Card Issuer Declined CVV" in msg: return "Approved! ✅"
-            elif "Your payment could not be taken. Please try again or use a different payment method. avs_and_cvv" in msg: return "Approved! ✅"
-            elif "Your payment could not be taken. Please try again or use a different payment method. cvv" in msg: return "Approved! ✅"
+            elif "Your payment could not be taken. Please try again or use a different payment method. Card Issuer Declined CVV" in msg: return "Approved! ✅", msg
+            elif "Your payment could not be taken. Please try again or use a different payment method. avs_and_cvv" in msg: return "Approved! ✅", msg
+            elif "Your payment could not be taken. Please try again or use a different payment method. cvv" in msg: return "Approved! ✅", msg
             else: return 'Declined! ❌', msg 
         except: return 
 #13
