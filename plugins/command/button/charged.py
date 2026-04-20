@@ -15,4 +15,14 @@ Payflow Charged ( /pfw)
 ♅ºFormat  $pfw cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
+Braintree 5.79 ( /btc) 
+♅ºType   Braintree 5.79
+♅ºFormat  $pfw cc|mm|yy|cvc
+♅ºstatus   (on ✅)
+━━━━━━━━━━━━━━━━
+paypal 0.7 ( /pp) 
+♅ºType   paypal 0.7
+♅ºFormat  $pp cc|mm|yy|cvc
+♅ºstatus   (on ✅)
+━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))

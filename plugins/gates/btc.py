@@ -1,13 +1,13 @@
 
 from srca.configs import find_cards,antispam
-from gates.paypal1 import paypal1
+from gates.b3charged5 import b35
 import time 
 from db.mongo_client import MongoDB
 from srca.configs import addCommand
 
 from func_bin import get_bin_info
 
-@addCommand('pp')
+@addCommand('btc')
 def mc(client, m):
     if MongoDB().query_group(m.chat.id) == None: return m.reply('Chat not Authorized.')
     querY = MongoDB().query_user(int(m.from_user.id))
@@ -24,16 +24,16 @@ def mc(client, m):
     
     x = get_bin_info(cc_com[:6])
 
-    new = m.reply(f'''<b> paypal 0.7
+    new = m.reply(f'''<b> Braintree 5.79
 
 • Cc: <code>{cc_com}</code>      
 • Status: Processing... [ ☃️ ]
 • From: {m.from_user.first_name}</b>''')
     
-    chk = paypal1(cc_com).main()
+    chk = b35(cc_com).main()
 
     fin = time.time()
-    texto = f'''<b> paypal 0.7
+    texto = f'''<b> Braintree 5.79
 
 • Cc: <code>{cc_com}</code>
 • Status: {chk[0]}

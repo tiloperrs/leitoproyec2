@@ -236,7 +236,7 @@ class paypal1:
                         'postalCode': 'A1A 1A1',
                         'country': 'CA',
                     },
-                    'email': 'banes42563@rohoza.com',
+                    'email': self.CorreoRand,
                     'currencyConversionType': 'PAYPAL',
                 },
                 'operationName': None,
