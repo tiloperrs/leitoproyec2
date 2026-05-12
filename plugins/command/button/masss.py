@@ -25,4 +25,14 @@ Braintree auth ( /btmas)
 ♅ºFormat  $btmas cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
+Payflow Charged 0.25 ( /masss2) 
+♅ºType   Payflow avs
+♅ºFormat  $mass cc|mm|yy|cvc
+♅ºstatus   (on ✅)
+━━━━━━━━━━━━━━━━
+Stripe auth ( /stmas1)
+♅ºType   Stripe auth
+♅ºFormat  $stmas cc|mm|yy|cvc
+♅ºstatus   (on ✅)
+━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))
