@@ -13,14 +13,14 @@ from srca.configs import addCommand, Client
 BASE_URL = "https://api.mail.tm"
 
 # =========================================
-# GUARDAR EMAILS TEMPORALES
+# GUARDAR EMAILS
 # =========================================
 
 temp_mails = {}
 
 
 # =========================================
-# COMANDO /mail
+# COMANDO MAIL
 # =========================================
 
 @addCommand("mail")
@@ -40,23 +40,21 @@ def mail(_, m):
         password = "Password123"
 
         # =========================
-        # OBTENER DOMINIOS
+        # DOMINIOS
         # =========================
 
         domains_response = requests.get(
             f"{BASE_URL}/domains"
         )
 
-        # Verificar status
         if domains_response.status_code != 200:
 
             return m.reply(
-                f"❌ Error API:\n<code>{domains_response.text}</code>"
+                f"❌ Error API\n<code>{domains_response.text}</code>"
             )
 
         data = domains_response.json()
 
-        # Verificar respuesta
         if "hydra:member" not in data:
 
             return m.reply(
@@ -65,38 +63,38 @@ def mail(_, m):
 
         domains = data["hydra:member"]
 
-        # Verificar lista vacía
         if len(domains) == 0:
 
             return m.reply(
                 "❌ No hay dominios disponibles."
             )
 
-        # Obtener dominio
         domain = domains[0]["domain"]
 
-        # Crear email
-        email = f"{username}@{domain}"
+        # =========================
+        # CREAR EMAIL
+        # =========================
 
-        # =========================
-        # CREAR CUENTA
-        # =========================
+        email = f"{username}@{domain}"
 
         account_data = {
             "address": email,
             "password": password
         }
 
+        # =========================
+        # CREAR CUENTA
+        # =========================
+
         create_response = requests.post(
             f"{BASE_URL}/accounts",
             json=account_data
         )
 
-        # Verificar creación
         if create_response.status_code not in [200, 201]:
 
             return m.reply(
-                f"❌ Error creando cuenta:\n<code>{create_response.text}</code>"
+                f"❌ Error creando cuenta\n<code>{create_response.text}</code>"
             )
 
         # =========================
@@ -111,7 +109,7 @@ def mail(_, m):
         if token_response.status_code != 200:
 
             return m.reply(
-                f"❌ Error login:\n<code>{token_response.text}</code>"
+                f"❌ Error login\n<code>{token_response.text}</code>"
             )
 
         token_data = token_response.json()
@@ -146,7 +144,7 @@ def mail(_, m):
                 [
                     InlineKeyboardButton(
                         "📩 Revisar Emails",
-                        callback_data="check_mail"
+                        callback_data=f"check_mail_{m.from_user.id}"
                     )
                 ]
             ]
@@ -167,7 +165,7 @@ def mail(_, m):
 
 ━━━━━━━━━━━━━━━
 
-📥 Usa el botón para revisar correos.
+📥 Presiona el botón para revisar correos.
 
 </b>"""
 
@@ -179,7 +177,7 @@ def mail(_, m):
     except Exception as e:
 
         m.reply(
-            f"❌ ERROR:\n<code>{e}</code>"
+            f"❌ ERROR\n<code>{e}</code>"
         )
 
 
@@ -188,29 +186,51 @@ def mail(_, m):
 # =========================================
 
 @Client.on_callback_query()
-def callbacks(_, query):
+def callbacks(_, call):
 
     try:
 
-        if query.data == "check_mail":
+        data = call.data.split("_")
 
-            user_id = query.from_user.id
+        # =========================
+        # VALIDAR BOTON
+        # =========================
 
-            # =========================
-            # VERIFICAR EMAIL
-            # =========================
+        if len(data) < 3:
+
+            return call.answer(
+                "❌ Botón inválido.",
+                show_alert=True
+            )
+
+        action = data[0]
+        action2 = data[1]
+        user_id = int(data[2])
+
+        # =========================
+        # BLOQUEAR BOTONES
+        # =========================
+
+        if call.from_user.id != user_id:
+
+            return call.answer(
+                "Botones bloqueados.",
+                show_alert=True
+            )
+
+        # =========================
+        # REVISAR EMAILS
+        # =========================
+
+        if action == "check" and action2 == "mail":
 
             if user_id not in temp_mails:
 
-                return query.message.reply(
+                return call.message.reply(
                     "❌ No tienes email temporal."
                 )
 
             headers = temp_mails[user_id]["headers"]
-
-            # =========================
-            # OBTENER MENSAJES
-            # =========================
 
             response = requests.get(
                 f"{BASE_URL}/messages",
@@ -219,19 +239,19 @@ def callbacks(_, query):
 
             if response.status_code != 200:
 
-                return query.message.reply(
-                    f"❌ Error obteniendo mensajes:\n<code>{response.text}</code>"
+                return call.message.reply(
+                    f"❌ Error obteniendo mensajes\n<code>{response.text}</code>"
                 )
 
-            data = response.json()
+            data_json = response.json()
 
-            if "hydra:member" not in data:
+            if "hydra:member" not in data_json:
 
-                return query.message.reply(
-                    "❌ Error leyendo correos."
+                return call.message.reply(
+                    "❌ Error leyendo mensajes."
                 )
 
-            messages = data["hydra:member"]
+            messages = data_json["hydra:member"]
 
             # =========================
             # SIN MENSAJES
@@ -239,7 +259,7 @@ def callbacks(_, query):
 
             if len(messages) == 0:
 
-                return query.message.reply(
+                return call.message.reply(
                     "📭 No hay correos."
                 )
 
@@ -251,19 +271,19 @@ def callbacks(_, query):
 
                 message_id = msg["id"]
 
-                full_message_response = requests.get(
+                full_response = requests.get(
                     f"{BASE_URL}/messages/{message_id}",
                     headers=headers
                 )
 
-                if full_message_response.status_code != 200:
+                if full_response.status_code != 200:
                     continue
 
-                full_message = full_message_response.json()
+                full_message = full_response.json()
 
                 texto = f"""<b>
 
-📩 NUEVO EMAIL
+📩 EMAIL RECIBIDO
 
 ━━━━━━━━━━━━━━━
 
@@ -281,10 +301,10 @@ def callbacks(_, query):
 
 </b>"""
 
-                query.message.reply(texto)
+                call.message.reply(texto)
 
     except Exception as e:
 
-        query.message.reply(
-            f"❌ ERROR:\n<code>{e}</code>"
+        call.message.reply(
+            f"❌ ERROR\n<code>{e}</code>"
         )
