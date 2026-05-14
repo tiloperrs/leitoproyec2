@@ -2,6 +2,7 @@ import requests
 import random
 import string
 
+from pyrogram import filters
 from pyrogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton
@@ -13,7 +14,7 @@ from srca.configs import addCommand, Client
 BASE_URL = "https://api.mail.tm"
 
 # =========================================
-# GUARDAR EMAILS
+# GUARDAR EMAILS TEMPORALES
 # =========================================
 
 temp_mails = {}
@@ -66,8 +67,12 @@ def mail(_, m):
         if len(domains) == 0:
 
             return m.reply(
-                "❌ No hay dominios disponibles."
+                "❌ No hay dominios."
             )
+
+        # =========================
+        # DOMINIO
+        # =========================
 
         domain = domains[0]["domain"]
 
@@ -131,20 +136,20 @@ def mail(_, m):
         # =========================
 
         temp_mails[m.from_user.id] = {
-            "email": email,
-            "headers": headers
+            "headers": headers,
+            "email": email
         }
 
         # =========================
-        # BOTONES
+        # BOTON
         # =========================
 
-        buttons = InlineKeyboardMarkup(
+        keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
                         "📩 Revisar Emails",
-                        callback_data=f"check_mail_{m.from_user.id}"
+                        callback_data=f"mailcheck_{m.from_user.id}"
                     )
                 ]
             ]
@@ -171,7 +176,7 @@ def mail(_, m):
 
         m.reply(
             text,
-            reply_markup=buttons
+            reply_markup=keyboard
         )
 
     except Exception as e:
@@ -182,10 +187,12 @@ def mail(_, m):
 
 
 # =========================================
-# CALLBACK BOTONES
+# CALLBACK BOTON
 # =========================================
 
-@Client.on_callback_query()
+@Client.on_callback_query(
+    filters.regex("^mailcheck_")
+)
 def clod(_, call):
 
     try:
@@ -196,17 +203,16 @@ def clod(_, call):
 
         data = call.data.split("_")
 
-        # Validar callback
-        if len(data) < 3:
+        # mailcheck_123456789
+
+        if len(data) < 2:
 
             return call.answer(
                 "❌ Botón inválido.",
                 show_alert=True
             )
 
-        action = data[0]
-        action2 = data[1]
-        user_id = int(data[2])
+        user_id = int(data[1])
 
         # =========================
         # BLOQUEAR BOTONES
@@ -220,69 +226,73 @@ def clod(_, call):
             )
 
         # =========================
-        # REVISAR EMAILS
+        # VERIFICAR SESION
         # =========================
 
-        if action == "check" and action2 == "mail":
+        if user_id not in temp_mails:
 
-            if user_id not in temp_mails:
+            return call.answer(
+                "❌ No tienes email.",
+                show_alert=True
+            )
 
-                return call.message.reply(
-                    "❌ No tienes email temporal."
-                )
+        headers = temp_mails[user_id]["headers"]
 
-            headers = temp_mails[user_id]["headers"]
+        # =========================
+        # OBTENER MENSAJES
+        # =========================
 
-            response = requests.get(
-                f"{BASE_URL}/messages",
+        response = requests.get(
+            f"{BASE_URL}/messages",
+            headers=headers
+        )
+
+        if response.status_code != 200:
+
+            return call.message.reply(
+                f"❌ Error obteniendo mensajes\n<code>{response.text}</code>"
+            )
+
+        data_json = response.json()
+
+        if "hydra:member" not in data_json:
+
+            return call.message.reply(
+                "❌ Error leyendo correos."
+            )
+
+        messages = data_json["hydra:member"]
+
+        # =========================
+        # NO HAY EMAILS
+        # =========================
+
+        if len(messages) == 0:
+
+            return call.answer(
+                "📭 No hay correos.",
+                show_alert=True
+            )
+
+        # =========================
+        # MOSTRAR EMAILS
+        # =========================
+
+        for msg in messages:
+
+            message_id = msg["id"]
+
+            full_response = requests.get(
+                f"{BASE_URL}/messages/{message_id}",
                 headers=headers
             )
 
-            if response.status_code != 200:
+            if full_response.status_code != 200:
+                continue
 
-                return call.message.reply(
-                    f"❌ Error obteniendo mensajes\n<code>{response.text}</code>"
-                )
+            full_message = full_response.json()
 
-            data_json = response.json()
-
-            if "hydra:member" not in data_json:
-
-                return call.message.reply(
-                    "❌ Error leyendo mensajes."
-                )
-
-            messages = data_json["hydra:member"]
-
-            # =========================
-            # NO HAY EMAILS
-            # =========================
-
-            if len(messages) == 0:
-
-                return call.message.reply(
-                    "📭 No hay correos."
-                )
-
-            # =========================
-            # MOSTRAR EMAILS
-            # =========================
-
-            for msg in messages:
-
-                message_id = msg["id"]
-
-                full_response = requests.get(
-                    f"{BASE_URL}/messages/{message_id}",
-                    headers=headers
-                )
-
-                if full_response.status_code != 200:
-                    continue
-
-                full_message = full_response.json()
-
-                texto = f"""<b>
+            texto = f"""<b>
 
 📩 EMAIL RECIBIDO
 
@@ -302,7 +312,7 @@ def clod(_, call):
 
 </b>"""
 
-                call.message.reply(texto)
+            call.message.reply(texto)
 
     except Exception as e:
 
