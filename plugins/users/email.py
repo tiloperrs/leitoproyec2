@@ -29,7 +29,7 @@ def mail(_, m):
     try:
 
         # =========================
-        # GENERAR EMAIL
+        # GENERAR USERNAME
         # =========================
 
         username = ''.join(
@@ -40,17 +40,42 @@ def mail(_, m):
         password = "Password123"
 
         # =========================
-        # DOMINIOS
+        # OBTENER DOMINIOS
         # =========================
 
         domains_response = requests.get(
             f"{BASE_URL}/domains"
         )
 
-        domains = domains_response.json()["hydra:member"]
+        # Verificar status
+        if domains_response.status_code != 200:
 
+            return m.reply(
+                f"❌ Error API:\n<code>{domains_response.text}</code>"
+            )
+
+        data = domains_response.json()
+
+        # Verificar respuesta
+        if "hydra:member" not in data:
+
+            return m.reply(
+                "❌ Error obteniendo dominios."
+            )
+
+        domains = data["hydra:member"]
+
+        # Verificar lista vacía
+        if len(domains) == 0:
+
+            return m.reply(
+                "❌ No hay dominios disponibles."
+            )
+
+        # Obtener dominio
         domain = domains[0]["domain"]
 
+        # Crear email
         email = f"{username}@{domain}"
 
         # =========================
@@ -62,10 +87,17 @@ def mail(_, m):
             "password": password
         }
 
-        requests.post(
+        create_response = requests.post(
             f"{BASE_URL}/accounts",
             json=account_data
         )
+
+        # Verificar creación
+        if create_response.status_code not in [200, 201]:
+
+            return m.reply(
+                f"❌ Error creando cuenta:\n<code>{create_response.text}</code>"
+            )
 
         # =========================
         # LOGIN
@@ -76,7 +108,21 @@ def mail(_, m):
             json=account_data
         )
 
-        token = token_response.json()["token"]
+        if token_response.status_code != 200:
+
+            return m.reply(
+                f"❌ Error login:\n<code>{token_response.text}</code>"
+            )
+
+        token_data = token_response.json()
+
+        if "token" not in token_data:
+
+            return m.reply(
+                "❌ No se recibió token."
+            )
+
+        token = token_data["token"]
 
         headers = {
             "Authorization": f"Bearer {token}"
@@ -92,7 +138,7 @@ def mail(_, m):
         }
 
         # =========================
-        # BOTON
+        # BOTONES
         # =========================
 
         buttons = InlineKeyboardMarkup(
@@ -106,9 +152,13 @@ def mail(_, m):
             ]
         )
 
+        # =========================
+        # RESPUESTA
+        # =========================
+
         text = f"""<b>
 
-📧 EMAIL TEMPORAL
+📧 EMAIL TEMPORAL GENERADO
 
 ━━━━━━━━━━━━━━━
 
@@ -129,12 +179,12 @@ def mail(_, m):
     except Exception as e:
 
         m.reply(
-            f"<b>❌ ERROR:</b>\n<code>{e}</code>"
+            f"❌ ERROR:\n<code>{e}</code>"
         )
 
 
 # =========================================
-# CALLBACK BOTON
+# CALLBACKS
 # =========================================
 
 @Client.on_callback_query()
@@ -145,6 +195,10 @@ def callbacks(_, query):
         if query.data == "check_mail":
 
             user_id = query.from_user.id
+
+            # =========================
+            # VERIFICAR EMAIL
+            # =========================
 
             if user_id not in temp_mails:
 
@@ -163,9 +217,27 @@ def callbacks(_, query):
                 headers=headers
             )
 
-            messages = response.json()["hydra:member"]
+            if response.status_code != 200:
 
-            if not messages:
+                return query.message.reply(
+                    f"❌ Error obteniendo mensajes:\n<code>{response.text}</code>"
+                )
+
+            data = response.json()
+
+            if "hydra:member" not in data:
+
+                return query.message.reply(
+                    "❌ Error leyendo correos."
+                )
+
+            messages = data["hydra:member"]
+
+            # =========================
+            # SIN MENSAJES
+            # =========================
+
+            if len(messages) == 0:
 
                 return query.message.reply(
                     "📭 No hay correos."
@@ -179,10 +251,15 @@ def callbacks(_, query):
 
                 message_id = msg["id"]
 
-                full_message = requests.get(
+                full_message_response = requests.get(
                     f"{BASE_URL}/messages/{message_id}",
                     headers=headers
-                ).json()
+                )
+
+                if full_message_response.status_code != 200:
+                    continue
+
+                full_message = full_message_response.json()
 
                 texto = f"""<b>
 
@@ -200,7 +277,7 @@ def callbacks(_, query):
 
 📨 MENSAJE:
 
-<code>{full_message['text']}</code>
+<code>{full_message.get('text', 'Sin contenido')}</code>
 
 </b>"""
 
