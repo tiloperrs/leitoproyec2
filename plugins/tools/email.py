@@ -40,7 +40,7 @@ def mail(_, m):
         password = "Password123"
 
         # =========================
-        # DOMINIOS
+        # OBTENER DOMINIOS
         # =========================
 
         domains_response = requests.get(
@@ -182,20 +182,21 @@ def mail(_, m):
 
 
 # =========================================
-# CALLBACKS
+# CALLBACK BOTONES
 # =========================================
 
 @Client.on_callback_query()
-def callbacks(_, call):
+def clod(_, call):
 
     try:
 
+        # =========================
+        # SPLIT CALLBACK
+        # =========================
+
         data = call.data.split("_")
 
-        # =========================
-        # VALIDAR BOTON
-        # =========================
-
+        # Validar callback
         if len(data) < 3:
 
             return call.answer(
@@ -254,7 +255,7 @@ def callbacks(_, call):
             messages = data_json["hydra:member"]
 
             # =========================
-            # SIN MENSAJES
+            # NO HAY EMAILS
             # =========================
 
             if len(messages) == 0:
