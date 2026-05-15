@@ -1,7 +1,7 @@
 from pyrogram import filters, Client
 import requests
 
-from plugins.tools.mail import (
+from plugins.tools.email import (
     temp_mails,
     BASE_URL
 )
