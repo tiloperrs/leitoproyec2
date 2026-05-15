@@ -1,36 +1,38 @@
+from pyrogram import filters, Client
 import requests
 import random
 import string
 
 from pyrogram.types import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
 )
 
-from srca.configs import addCommand, Client
+from srca.configs import addCommand
+from db.mongo_client import MongoDB
 
 
 BASE_URL = "https://api.mail.tm"
 
-# =========================================
-# GUARDAR EMAILS TEMPORALES
-# =========================================
-
 temp_mails = {}
 
 
-# =========================================
-# COMANDO MAIL
-# =========================================
+@addCommand('mail')
+def start(_, message):
 
-@addCommand("mail")
-def mail(_, m):
+    querY = MongoDB().query_user(
+        int(message.from_user.id)
+    )
+
+    if querY == None:
+        return message.reply(
+            'Usar el comando $register para el registro.'
+        )
+
+    if querY['role'] == 'baneado':
+        return message.reply('User baneado')
 
     try:
-
-        # =====================================
-        # USERNAME RANDOM
-        # =====================================
 
         username = ''.join(
             random.choice(string.ascii_lowercase)
@@ -40,43 +42,19 @@ def mail(_, m):
         password = "Password123"
 
         # =====================================
-        # OBTENER DOMINIOS
+        # DOMINIOS
         # =====================================
 
         domains_response = requests.get(
             f"{BASE_URL}/domains"
         )
 
-        if domains_response.status_code != 200:
-
-            return m.reply(
-                f"❌ Error API\n<code>{domains_response.text}</code>"
-            )
-
-        data = domains_response.json()
-
-        if "hydra:member" not in data:
-
-            return m.reply(
-                "❌ Error obteniendo dominios."
-            )
-
-        domains = data["hydra:member"]
-
-        if len(domains) == 0:
-
-            return m.reply(
-                "❌ No hay dominios disponibles."
-            )
-
-        # =====================================
-        # DOMINIO
-        # =====================================
+        domains = domains_response.json()["hydra:member"]
 
         domain = domains[0]["domain"]
 
         # =====================================
-        # CREAR EMAIL
+        # EMAIL
         # =====================================
 
         email = f"{username}@{domain}"
@@ -90,16 +68,10 @@ def mail(_, m):
         # CREAR CUENTA
         # =====================================
 
-        create_response = requests.post(
+        requests.post(
             f"{BASE_URL}/accounts",
             json=account_data
         )
-
-        if create_response.status_code not in [200, 201]:
-
-            return m.reply(
-                f"❌ Error creando cuenta\n<code>{create_response.text}</code>"
-            )
 
         # =====================================
         # LOGIN
@@ -110,220 +82,53 @@ def mail(_, m):
             json=account_data
         )
 
-        if token_response.status_code != 200:
-
-            return m.reply(
-                f"❌ Error login\n<code>{token_response.text}</code>"
-            )
-
-        token_data = token_response.json()
-
-        if "token" not in token_data:
-
-            return m.reply(
-                "❌ No se recibió token."
-            )
-
-        token = token_data["token"]
+        token = token_response.json()["token"]
 
         headers = {
             "Authorization": f"Bearer {token}"
         }
 
         # =====================================
-        # GUARDAR SESION
+        # GUARDAR
         # =====================================
 
-        temp_mails[m.from_user.id] = {
-            "headers": headers,
-            "email": email
-        }
+        temp_mails[message.from_user.id] = headers
 
         # =====================================
         # BOTON
         # =====================================
 
-        keyboard = InlineKeyboardMarkup(
+        re_gen = InlineKeyboardMarkup([
             [
-                [
-                    InlineKeyboardButton(
-                        "📩 Revisar Emails",
-                        callback_data=f"mailcheck_{m.from_user.id}"
-                    )
-                ]
+                InlineKeyboardButton(
+                    "📩 Revisar Emails",
+                    callback_data=f"mail:{message.from_user.id}"
+                )
             ]
-        )
+        ])
 
-        # =====================================
-        # RESPUESTA
-        # =====================================
+        texto = f'''<b>
 
-        text = f"""<b>
+📧 EMAIL TEMPORAL
 
-📧 EMAIL TEMPORAL GENERADO
-
-━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━
 
 • EMAIL:
 <code>{email}</code>
 
-━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━
 
-📥 Presiona el botón para revisar correos.
+by: @{message.from_user.username}
 
-</b>"""
+</b>'''
 
-        m.reply(
-            text,
-            reply_markup=keyboard
+        message.reply(
+            texto,
+            reply_markup=re_gen
         )
 
     except Exception as e:
 
-        m.reply(
-            f"❌ ERROR\n<code>{e}</code>"
-        )
-
-
-# =========================================
-# CALLBACKS
-# =========================================
-
-@Client.on_callback_query()
-def clod(_, call):
-
-    try:
-
-        # =====================================
-        # VALIDAR CALLBACK
-        # =====================================
-
-        if "_" not in call.data:
-            return
-
-        data = call.data.split("_")
-
-        # =====================================
-        # VALIDAR TAMAÑO
-        # =====================================
-
-        if len(data) < 2:
-            return
-
-        # =====================================
-        # SOLO mailcheck
-        # =====================================
-
-        if data[0] != "mailcheck":
-            return
-
-        # =====================================
-        # USER ID
-        # =====================================
-
-        user_id = int(data[1])
-
-        # =====================================
-        # BLOQUEAR BOTONES
-        # =====================================
-
-        if call.from_user.id != user_id:
-
-            return call.answer(
-                "Botones bloqueados."
-            )
-
-        # =====================================
-        # VERIFICAR SESION
-        # =====================================
-
-        if user_id not in temp_mails:
-
-            return call.answer(
-                "❌ No tienes email."
-            )
-
-        headers = temp_mails[user_id]["headers"]
-
-        # =====================================
-        # OBTENER MENSAJES
-        # =====================================
-
-        response = requests.get(
-            f"{BASE_URL}/messages",
-            headers=headers
-        )
-
-        if response.status_code != 200:
-
-            return call.message.reply(
-                f"❌ Error obteniendo mensajes\n<code>{response.text}</code>"
-            )
-
-        data_json = response.json()
-
-        if "hydra:member" not in data_json:
-
-            return call.message.reply(
-                "❌ Error leyendo correos."
-            )
-
-        messages = data_json["hydra:member"]
-
-        # =====================================
-        # NO HAY EMAILS
-        # =====================================
-
-        if len(messages) == 0:
-
-            return call.answer(
-                "📭 No hay correos."
-            )
-
-        # =====================================
-        # MOSTRAR EMAILS
-        # =====================================
-
-        for msg in messages:
-
-            message_id = msg["id"]
-
-            full_response = requests.get(
-                f"{BASE_URL}/messages/{message_id}",
-                headers=headers
-            )
-
-            if full_response.status_code != 200:
-                continue
-
-            full_message = full_response.json()
-
-            texto = f"""<b>
-
-📩 EMAIL RECIBIDO
-
-━━━━━━━━━━━━━━━
-
-• DE:
-<code>{msg['from']['address']}</code>
-
-• ASUNTO:
-<code>{msg['subject']}</code>
-
-━━━━━━━━━━━━━━━
-
-📨 MENSAJE:
-
-<code>{full_message.get('text', 'Sin contenido')}</code>
-
-</b>"""
-
-            call.message.reply(texto)
-
-    except Exception as e:
-
-        print(e)
-
-        call.message.reply(
-            f"❌ ERROR\n<code>{e}</code>"
+        message.reply(
+            f'<b>❌ ERROR\n<code>{e}</code></b>'
         )
