@@ -2,6 +2,11 @@ from pyrogram import filters, Client
 import requests
 import re
 
+from pyrogram.types import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton
+)
+
 from plugins.tools.email import (
     temp_mails,
     BASE_URL
@@ -66,6 +71,15 @@ def exit(client, message):
             )
 
         # =====================================
+        # ELIMINAR MENSAJE ORIGINAL
+        # =====================================
+
+        try:
+            message.message.delete()
+        except:
+            pass
+
+        # =====================================
         # MOSTRAR EMAILS
         # =====================================
 
@@ -98,7 +112,7 @@ def exit(client, message):
             )
 
             # =====================================
-            # LIMPIAR TRACKING
+            # LIMPIAR HTML / TRACKING
             # =====================================
 
             contenido = re.sub(
@@ -134,40 +148,78 @@ def exit(client, message):
             )
 
             # =====================================
-            # TEXTO BONITO
+            # EMOJI POR SERVICIO
+            # =====================================
+
+            remitente = msg['from']['address']
+
+            icon = "📩"
+
+            if "openai" in remitente:
+                icon = "🤖"
+
+            elif "discord" in remitente:
+                icon = "🎮"
+
+            elif "google" in remitente:
+                icon = "📧"
+
+            elif "github" in remitente:
+                icon = "🐙"
+
+            # =====================================
+            # BOTON REFRESH
+            # =====================================
+
+            buttons = InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton(
+                        "🔄 Refresh",
+                        callback_data=f"mail:{user_id}"
+                    )
+                ]
+            ])
+
+            # =====================================
+            # TEXTO ULTRA CLEAN
             # =====================================
 
             texto = f'''<b>
+╔════════════════╗
+      {icon} 𝗡𝗘𝗪 𝗘𝗠𝗔𝗜𝗟
+╚════════════════╝
 
-📩 EMAIL RECIBIDO
-
-━━━━━━━━━━━━━━━━━━
-
-• DE:
+✉️ <b>FROM</b>
 <code>{msg['from']['address']}</code>
 
-• ASUNTO:
+📌 <b>SUBJECT</b>
 <code>{msg['subject']}</code>
 
-━━━━━━━━━━━━━━━━━━
-
-🔑 OTP:
+🔑 <b>OTP CODE</b>
 <code>{otp_code}</code>
 
 ━━━━━━━━━━━━━━━━━━
 
-📨 MENSAJE:
+📨 <b>MESSAGE</b>
 
-<code>{contenido[:700]}</code>
+<code>{contenido[:500]}</code>
 
+━━━━━━━━━━━━━━━━━━
+
+⚡ Powered By Kiyotaka
 </b>'''
 
             message.message.reply(
-                texto
+                texto,
+                reply_markup=buttons
             )
 
     except Exception as e:
 
         message.message.reply(
-            f'<b>❌ ERROR\n<code>{e}</code></b>'
+            f'''<b>
+❌ ERROR DETECTED
+
+<code>{e}</code>
+</b>'''
         )
