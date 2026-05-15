@@ -46,7 +46,7 @@ def exit(client, message):
                 show_alert=True
             )
 
-        headers = temp_mails[user_id]
+        headers = temp_mails[user_id]["headers"]
 
         # =====================================
         # MENSAJES
@@ -148,7 +148,7 @@ def exit(client, message):
             )
 
             # =====================================
-            # EMOJI POR SERVICIO
+            # ICONOS
             # =====================================
 
             remitente = msg['from']['address']
@@ -181,13 +181,18 @@ def exit(client, message):
             ])
 
             # =====================================
-            # TEXTO ULTRA CLEAN
+            # TEXTO PREMIUM
             # =====================================
 
             texto = f'''<b>
 ╔════════════════╗
       {icon} 𝗡𝗘𝗪 𝗘𝗠𝗔𝗜𝗟
 ╚════════════════╝
+
+📧 <b>TEMP MAIL</b>
+<code>{temp_mails[user_id]["email"]}</code>
+
+━━━━━━━━━━━━━━━━━━
 
 ✉️ <b>FROM</b>
 <code>{msg['from']['address']}</code>
@@ -199,7 +204,6 @@ def exit(client, message):
 <code>{otp_code}</code>
 
 ━━━━━━━━━━━━━━━━━━
-
 ⚡ Powered By Kiyotaka
 </b>'''
 
