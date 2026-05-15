@@ -2,7 +2,6 @@ import requests
 import random
 import string
 
-from pyrogram import filters
 from pyrogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton
@@ -29,9 +28,9 @@ def mail(_, m):
 
     try:
 
-        # =========================
-        # GENERAR USERNAME
-        # =========================
+        # =====================================
+        # USERNAME RANDOM
+        # =====================================
 
         username = ''.join(
             random.choice(string.ascii_lowercase)
@@ -40,9 +39,9 @@ def mail(_, m):
 
         password = "Password123"
 
-        # =========================
+        # =====================================
         # OBTENER DOMINIOS
-        # =========================
+        # =====================================
 
         domains_response = requests.get(
             f"{BASE_URL}/domains"
@@ -67,18 +66,18 @@ def mail(_, m):
         if len(domains) == 0:
 
             return m.reply(
-                "❌ No hay dominios."
+                "❌ No hay dominios disponibles."
             )
 
-        # =========================
+        # =====================================
         # DOMINIO
-        # =========================
+        # =====================================
 
         domain = domains[0]["domain"]
 
-        # =========================
+        # =====================================
         # CREAR EMAIL
-        # =========================
+        # =====================================
 
         email = f"{username}@{domain}"
 
@@ -87,9 +86,9 @@ def mail(_, m):
             "password": password
         }
 
-        # =========================
+        # =====================================
         # CREAR CUENTA
-        # =========================
+        # =====================================
 
         create_response = requests.post(
             f"{BASE_URL}/accounts",
@@ -102,9 +101,9 @@ def mail(_, m):
                 f"❌ Error creando cuenta\n<code>{create_response.text}</code>"
             )
 
-        # =========================
+        # =====================================
         # LOGIN
-        # =========================
+        # =====================================
 
         token_response = requests.post(
             f"{BASE_URL}/token",
@@ -131,18 +130,18 @@ def mail(_, m):
             "Authorization": f"Bearer {token}"
         }
 
-        # =========================
+        # =====================================
         # GUARDAR SESION
-        # =========================
+        # =====================================
 
         temp_mails[m.from_user.id] = {
             "headers": headers,
             "email": email
         }
 
-        # =========================
+        # =====================================
         # BOTON
-        # =========================
+        # =====================================
 
         keyboard = InlineKeyboardMarkup(
             [
@@ -155,9 +154,9 @@ def mail(_, m):
             ]
         )
 
-        # =========================
+        # =====================================
         # RESPUESTA
-        # =========================
+        # =====================================
 
         text = f"""<b>
 
@@ -187,60 +186,68 @@ def mail(_, m):
 
 
 # =========================================
-# CALLBACK BOTON
+# CALLBACKS
 # =========================================
 
-@Client.on_callback_query(
-    filters.regex("^mailcheck_")
-)
+@Client.on_callback_query()
 def clod(_, call):
 
     try:
 
-        # =========================
-        # SPLIT CALLBACK
-        # =========================
+        # =====================================
+        # VALIDAR CALLBACK
+        # =====================================
+
+        if "_" not in call.data:
+            return
 
         data = call.data.split("_")
 
-        # mailcheck_123456789
+        # =====================================
+        # VALIDAR TAMAÑO
+        # =====================================
 
         if len(data) < 2:
+            return
 
-            return call.answer(
-                "❌ Botón inválido.",
-                show_alert=True
-            )
+        # =====================================
+        # SOLO mailcheck
+        # =====================================
+
+        if data[0] != "mailcheck":
+            return
+
+        # =====================================
+        # USER ID
+        # =====================================
 
         user_id = int(data[1])
 
-        # =========================
+        # =====================================
         # BLOQUEAR BOTONES
-        # =========================
+        # =====================================
 
         if call.from_user.id != user_id:
 
             return call.answer(
-                "Botones bloqueados.",
-                show_alert=True
+                "Botones bloqueados."
             )
 
-        # =========================
+        # =====================================
         # VERIFICAR SESION
-        # =========================
+        # =====================================
 
         if user_id not in temp_mails:
 
             return call.answer(
-                "❌ No tienes email.",
-                show_alert=True
+                "❌ No tienes email."
             )
 
         headers = temp_mails[user_id]["headers"]
 
-        # =========================
+        # =====================================
         # OBTENER MENSAJES
-        # =========================
+        # =====================================
 
         response = requests.get(
             f"{BASE_URL}/messages",
@@ -263,20 +270,19 @@ def clod(_, call):
 
         messages = data_json["hydra:member"]
 
-        # =========================
+        # =====================================
         # NO HAY EMAILS
-        # =========================
+        # =====================================
 
         if len(messages) == 0:
 
             return call.answer(
-                "📭 No hay correos.",
-                show_alert=True
+                "📭 No hay correos."
             )
 
-        # =========================
+        # =====================================
         # MOSTRAR EMAILS
-        # =========================
+        # =====================================
 
         for msg in messages:
 
@@ -315,6 +321,8 @@ def clod(_, call):
             call.message.reply(texto)
 
     except Exception as e:
+
+        print(e)
 
         call.message.reply(
             f"❌ ERROR\n<code>{e}</code>"
