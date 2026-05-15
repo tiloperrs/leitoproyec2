@@ -200,12 +200,6 @@ def exit(client, message):
 
 ━━━━━━━━━━━━━━━━━━
 
-📨 <b>MESSAGE</b>
-
-<code>{contenido[:500]}</code>
-
-━━━━━━━━━━━━━━━━━━
-
 ⚡ Powered By Kiyotaka
 </b>'''
 
