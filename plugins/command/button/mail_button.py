@@ -1,5 +1,6 @@
 from pyrogram import filters, Client
 import requests
+import re
 
 from plugins.tools.email import (
     temp_mails,
@@ -77,6 +78,65 @@ def exit(client, message):
                 headers=headers
             ).json()
 
+            # =====================================
+            # CONTENIDO
+            # =====================================
+
+            contenido = full_message.get(
+                'text',
+                'Sin contenido'
+            )
+
+            # =====================================
+            # LIMPIAR LINKS
+            # =====================================
+
+            contenido = re.sub(
+                r'https?://\S+',
+                '',
+                contenido
+            )
+
+            # =====================================
+            # LIMPIAR TRACKING
+            # =====================================
+
+            contenido = re.sub(
+                r'\[.*?\]',
+                '',
+                contenido
+            )
+
+            # =====================================
+            # LIMPIAR ESPACIOS
+            # =====================================
+
+            contenido = re.sub(
+                r'\n{3,}',
+                '\n\n',
+                contenido
+            )
+
+            contenido = contenido.strip()
+
+            # =====================================
+            # EXTRAER OTP
+            # =====================================
+
+            otp = re.findall(
+                r'\b\d{4,8}\b',
+                contenido
+            )
+
+            otp_code = (
+                otp[0]
+                if otp else "No encontrado"
+            )
+
+            # =====================================
+            # TEXTO BONITO
+            # =====================================
+
             texto = f'''<b>
 
 📩 EMAIL RECIBIDO
@@ -91,9 +151,14 @@ def exit(client, message):
 
 ━━━━━━━━━━━━━━━━━━
 
+🔑 OTP:
+<code>{otp_code}</code>
+
+━━━━━━━━━━━━━━━━━━
+
 📨 MENSAJE:
 
-<code>{full_message.get('text', 'Sin contenido')}</code>
+<code>{contenido[:700]}</code>
 
 </b>'''
 
