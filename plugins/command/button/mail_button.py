@@ -188,11 +188,6 @@ def exit(client, message):
 ╔════════════════╗
       {icon} 𝗡𝗘𝗪 𝗘𝗠𝗔𝗜𝗟
 ╚════════════════╝
-
-📧 <b>TEMP MAIL</b>
-<code>{temp_mails[user_id]["email"]}</code>
-
-━━━━━━━━━━━━━━━━━━
 ✉️ <b>FROM</b>
 <code>{msg['from']['address']}</code>
 
@@ -201,9 +196,7 @@ def exit(client, message):
 
 🔑 <b>OTP CODE</b>
 <code>{otp_code}</code>
-
 ━━━━━━━━━━━━━━━━━━
-
 ⚡ Powered By Kiyotaka
 </b>'''
 
