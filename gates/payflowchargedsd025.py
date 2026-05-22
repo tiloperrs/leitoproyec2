@@ -73,8 +73,3 @@ class pafiw:
             else:return 'Declined! ❌', mensaje
         
         except:return 'Declined! ❌', '20003 - This transaction was declined.'
-
-
-        
-
-
