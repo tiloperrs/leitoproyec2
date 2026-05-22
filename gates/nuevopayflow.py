@@ -7,12 +7,9 @@ import random
 from fake_useragent import UserAgent
 import time
 import uuid
-import undetected_chromedriver as uc
 import time
 from requests import Session
-import undetected_chromedriver as uc
 import time
-import webbrowser
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
 
