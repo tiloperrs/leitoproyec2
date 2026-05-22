@@ -3,7 +3,7 @@ from gates.nuevopayflow import pafiwess
 from db.mongo_client import MongoDB
 import time, requests
 
-@addCommand("mass")
+@addCommand("pfmass")
 def mass_cmd(client, m):
 
     if MongoDB().query_group(m.chat.id) is None:
