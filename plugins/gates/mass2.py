@@ -1,5 +1,5 @@
 from srca.configs import find_cards, antispam, addCommand
-from gates.payflow_pro_ import payflow_pro
+from gates.payflowmass3 import pafiw
 from db.mongo_client import MongoDB
 import time, requests
 
@@ -34,10 +34,10 @@ def mass_cmd(client, m):
             break
 
     if not tarjetas:
-        return m.reply("<b>payflow Charged 1.15\nFormat: /mass x10</b>")
+        return m.reply("<b>payflow charged mass\nFormat: /mass x10</b>")
 
     inicio = time.time()
-    gate = "payflow avs Charged"
+    gate = "payflow charged mass"
     msg = m.reply(f"<b>{gate}</b>\nProcesando {len(tarjetas)} tarjetas...")
 
     resultados, total_deduct = [], 0
@@ -65,7 +65,7 @@ def mass_cmd(client, m):
         bin_data = bin_cache[bin6]
         country = f"{bin_data.get('country_name','')} {bin_data.get('country_flag','')}"
 
-        chk = payflow_pro().main(cc)
+        chk = pafiw().main(cc)
         cr = 4 if "approved" in chk[0].lower() else 2
 
         if user["credits"] < total_deduct + cr:

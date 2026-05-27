@@ -25,7 +25,7 @@ Braintree auth ( /btmas)
 ♅ºFormat  $btmas cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
-Payflow Charged 0.25 ( /masss2) 
+Payflow Charged 10.58( /mass2) 
 ♅ºType   Payflow avs
 ♅ºFormat  $mass cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
