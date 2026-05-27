@@ -7,12 +7,9 @@ import random
 from fake_useragent import UserAgent
 import time
 import uuid
-import undetected_chromedriver as uc
 import time
 from requests import Session
-import undetected_chromedriver as uc
 import time
-import webbrowser
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
 
@@ -327,4 +324,3 @@ class pafiw:
         except Exception as e:
             print(e)
             return 'Declined ❌', str(e)
-print(pafiw().main('4563310041475116|11|2027|692'))
