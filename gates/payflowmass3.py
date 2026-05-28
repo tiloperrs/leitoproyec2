@@ -288,7 +288,7 @@ class b35:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.detectar_tipo_tarjeta,
+                'payment[cc_type]': self.detectar_tipo_tarjeta(),
                 'payment[cc_number]': self.cc,
                 'payment[cc_exp_month]': self.mes,
                 'payment[cc_exp_year]': self.ano,
@@ -320,7 +320,7 @@ class b35:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.detectar_tipo_tarjeta,
+                'payment[cc_type]': self.detectar_tipo_tarjeta(),
                 'payment[cc_number]': self.cc,
                 'payment[cc_exp_month]': self.mes,
                 'payment[cc_exp_year]': self.ano,
