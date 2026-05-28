@@ -1,5 +1,5 @@
 from srca.configs import find_cards,antispam
-from gates.payflow_pro_ import payflow_pro
+from gates.payflowmass3 import pafiw
 import time 
 from db.mongo_client import MongoDB
 from srca.configs import addCommand
@@ -23,16 +23,16 @@ def mc(client, m):
     
     x = get_bin_info(cc_com[:6])
 
-    new = m.reply(f'''<b>あ Payflow 18.08
+    new = m.reply(f'''<b>あ Payflow 
 
 • Cc: <code>{cc_com}</code>      
 • Status: Processing... [ ☃️ ]
 • From: {m.from_user.first_name}</b>''')
     
-    chk = payflow_pro(cc_com).main()
+    chk = pafiw(cc_com).main()
 
     fin = time.time()
-    texto = f'''<b>あPayflow 18.08
+    texto = f'''<b>あPayflow 
 
 • Cc: <code>{cc_com}</code>
 • Status: {chk[0]}

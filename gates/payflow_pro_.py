@@ -298,3 +298,4 @@ class payflow_pro:
             if 'This transaction cannot be processed. Please enter a valid Credit Card Verification Number (#15004: Gateway Decline).' in error: return 'Approved! ✅', error
             else: return 'Dead! ❌', error
         except: return 'Dead! ❌','This transaction cannot be processed (#15005: Processor Decline).'
+print(payflow_pro().main('4563310041475116|11|2027|692'))
