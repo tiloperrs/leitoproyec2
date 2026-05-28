@@ -36,7 +36,7 @@ class Autocomplet:
         return self.bear_end
 
 @dataclass
-class b35:
+class pafiw:
     def __init__(self, tarjeta):
 
             partes = tarjeta.split("|")
