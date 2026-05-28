@@ -16,18 +16,11 @@ def mc(client, m):
     inicio = time.time()
     if antispam(querY['antispam'],m):return
     
-    tarjetas = []
-    for l in texto.splitlines():
-        ccs = find_cards(l)
-        if ccs and len(ccs) == 4:
-            tarjetas.append(ccs)
-        if len(tarjetas) == 10:
-            break   
+    
     if m.reply_to_message:ccs = find_cards(m.reply_to_message.text)
     else: ccs = find_cards(m.text)
     cc_com = '{}|{}|{}|{}'.format(ccs[0], ccs[1], ccs[2], ccs[3])
-    for i, ccs in enumerate(tarjetas, start=1):
-        cc = "|".join(ccs)
+    
     x = get_bin_info(cc_com[:6])
 
     new = m.reply(f'''<b>あ Payflow 
@@ -36,7 +29,7 @@ def mc(client, m):
 • Status: Processing... [ ☃️ ]
 • From: {m.from_user.first_name}</b>''')
     
-    chk = pafiw().main(cc)
+    chk = pafiw(cc_com).main()
 
     fin = time.time()
     texto = f'''<b>あPayflow 
