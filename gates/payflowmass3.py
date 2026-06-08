@@ -339,4 +339,3 @@ class pafiw:
         except Exception as e:
             print(e)
             return 'Declined ❌', str(e)
-print(pafiw().main('4110905024362674|09|2029|125'))
