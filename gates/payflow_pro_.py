@@ -120,7 +120,7 @@ class payflow_pro:
                 'billing[address_id]': '693175',
                 'billing[firstname]': 'ldfl',
                 'billing[lastname]': 'dsdasd',
-                'billing[email]': self.main,
+                'billing[email]': self.UseMail,
                 'billing[street][]': [
                     'moall del sol',
                     'sadw',
