@@ -16,10 +16,11 @@ def start(_,m):
 Name: {m.from_user.first_name}
 id: {m.from_user.id}
 Username: @{m.from_user.username}</b>'''
-            Client.send_message(_,chat_id=-1002058267689,text=texto)
+            Client.send_message(_,chat_id=5800776977,text=texto)
             
             return m.reply_text(f'Welcome {m.from_user.first_name}, acabas de registrarte ✳️.')
         
         else: m.reply('<b>Ya estas registrado.</b>')
     except: m.reply('<b>Ya estas registrado.</b>')
+
 
