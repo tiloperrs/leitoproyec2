@@ -218,7 +218,3 @@ class b3:
         
                
 
-
-ccs = input('Card: ')
-chk = b3().main(ccs)
-print(chk)
