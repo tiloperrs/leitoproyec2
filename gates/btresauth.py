@@ -17,10 +17,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from bypasss import obtener_driver_autorizado
-
-# Importamos la función de nuestro archivo bypass.py
-from bypasss import obtener_driver_autorizado 
+from gates.bypasss import obtener_driver_autorizado
 
 def generate_usa_address():
 	fake = Faker('en_US')
