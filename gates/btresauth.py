@@ -21,7 +21,6 @@ from bypass import obtener_driver_autorizado
 
 # Importamos la función de nuestro archivo bypass.py
 from bypass import obtener_driver_autorizado 
-
 def generate_usa_address():
 	fake = Faker('en_US')
 	try:
@@ -41,27 +40,12 @@ def generate_usa_address():
 		}
 	except KeyError:
 		return generate_usa_address()
-
-
 class ConfigsPAge:
     @classmethod
-    
     def QueryText(self, data:str=None, chainOne:str=None, chainTwo:str=None):
 
         try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
         except ValueError: return None 
-
-    def Ccs(self, cards:str=None):
-        if '|' in cards: 
-            return cards.split('|')
-        elif ':' in cards: 
-            return cards.split(':')
-        elif ',' in cards: 
-            return cards.split(',')
-        elif '-' in cards: return cards.split('-')
-
-        return cards
-
 
     @classmethod
     def RandomName(self, dato: str = None):
@@ -76,18 +60,8 @@ class ConfigsPAge:
         else:
             return 'Valores incorrectos: >>>   ConfigsPAge().RandomName("username")'
 
-    def SaveResponseHtml(self, response: str):
-        try:
-            with open("ResponseHtml.html", "w", encoding="utf-8") as f:
-                f.write(response)
-        except Exception as e:
-            print(f"Error guardando el archivo: {e}")
-
-# Proxy
-proxy_url = 'http://oplljqes-rotate:1c4zw3p5n0yv@p.webshare.io:80'
-
 @dataclass
-class b3:
+class payflow_pro:
     def main(self, card):
         try:
             self.Nombre = ConfigsPAge().RandomName('username')
@@ -217,3 +191,4 @@ class b3:
         except: return 'Declined! ❌','Declined - No such issuer'
         
                
+
