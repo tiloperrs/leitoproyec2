@@ -159,7 +159,7 @@ class b3:
             yy = self.ccs[2][-2:]
 
             headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','content-type': 'application/x-www-form-urlencoded','origin': 'https://portal.apsclicktopay.com','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            data = {'billing-cc-number': self.ccs[0].replace(' ', ''),'billing-cc-exp': f'{mm}/{yy}','billing-cvv': self.ccs[3],}
+            data = {'billing-cc-number': self.ccs[0].replace(' ', ''),'billing-cc-exp': f'{self.ccs[1]}/{self.ccs[2]}','billing-cvv': self.ccs[3],}
             r6 = session.post(f'https://gateway.repay.com/api/v2/three-step/{token}', headers=headers, data=data)
 
             headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
