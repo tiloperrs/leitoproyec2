@@ -26,13 +26,6 @@ def find_between(data, first, last):
   except ValueError:
     return None  
 
-zipcode = direc['postalCode']
-try:
-    city = direc['city']
-except KeyError:
-    city = 'NY'
-state = direc['state']
-street = direc['address1']
 
 class stripe2:
     def __init__(self, tarjeta):
