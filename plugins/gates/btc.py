@@ -1,6 +1,6 @@
 
 from srca.configs import find_cards,antispam
-from gates.b3charged5 import b35
+from gates.btresauth import b3
 import time 
 from db.mongo_client import MongoDB
 from srca.configs import addCommand
@@ -30,7 +30,7 @@ def mc(client, m):
 • Status: Processing... [ ☃️ ]
 • From: {m.from_user.first_name}</b>''')
     
-    chk = b35(cc_com).main()
+    chk = b3(cc_com).main()
 
     fin = time.time()
     texto = f'''<b> Braintree 5.79
