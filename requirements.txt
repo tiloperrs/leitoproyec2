@@ -40,3 +40,7 @@ aiohttp
 fake_useragent
 tenacity
 random_address
+selenium
+undetected-chromedriver
+beautifulsoup4
+requests
