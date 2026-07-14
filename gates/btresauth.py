@@ -61,7 +61,7 @@ class ConfigsPAge:
             return 'Valores incorrectos: >>>   ConfigsPAge().RandomName("username")'
 
 @dataclass
-class payflow_pro:
+class b3:
     def main(self, card):
         try:
             self.Nombre = ConfigsPAge().RandomName('username')
