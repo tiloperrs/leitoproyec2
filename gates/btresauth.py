@@ -58,7 +58,7 @@ class ConfigsPAge:
 
         return cards
 @dataclass
-class b35:
+class b3:
     def __init__(self, tarjeta):
 
             partes = tarjeta.split("|")
