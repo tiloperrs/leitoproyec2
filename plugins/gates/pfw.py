@@ -23,25 +23,24 @@ def mc(client, m):
     
     x = get_bin_info(cc_com[:6])
 
-    new = m.reply(f'''<b>あ Payflow 
-
-• Cc: <code>{cc_com}</code>      
-• Status: Processing... [ ☃️ ]
-• From: {m.from_user.first_name}</b>''')
+    new = m.reply(f'''<b>✦ -「# Payflow  ($10.85) 」- ✦
+✦ - Cc: <code>{cc_com}</code>      
+✦ - Status: Processing... [ ☃️ ]
+✦ - From: {m.from_user.first_name}</b>''')
     
     chk = pafiw(cc_com).main()
 
     fin = time.time()
-    texto = f'''<b>あPayflow 
-
-• Cc: <code>{cc_com}</code>
-• Status: {chk[0]}
-• Response: <code>{chk[1]}</code>
-
-BIN = <code>{x.get("type")}</code> | <code>{x.get("level")}</code> | <code>{x.get("vendor")}</code>
-COUNTY = <code>{x.get("country")} {x.get("flag")}</code>
-BANK = <code>{x.get("bank_name")}</code>
-
+    texto = f'''<b>✦ -「# Payflow  ($10.85) 」- ✦
+— — — — — — — — — — — — —
+✦ - Cc: <code>{cc_com}</code>
+✦ - Status: {chk[0]}
+✦ - Response: <code>{chk[1]}</code>
+— — — — — — — — — — — — —
+✦ -BIN = <code>{x.get("type")}</code> | <code>{x.get("level")}</code> | <code>{x.get("vendor")}</code>
+✦ -COUNTY = <code>{x.get("country")} {x.get("flag")}</code>
+✦ -BANK = <code>{x.get("bank_name")}</code>
+— — — — — — — — — — — — —
 • Pxs: Live ✅
 • Time: <code>{fin-inicio:0.4f}'s</code>
 • From: {m.from_user.first_name}</b>'''
