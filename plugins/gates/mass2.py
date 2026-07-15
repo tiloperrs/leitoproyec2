@@ -38,7 +38,7 @@ def mass_cmd(client, m):
 
     inicio = time.time()
     gate = "payflow charged mass"
-    msg = m.reply(f"<b>{gate}</b>\nProcesando {len(tarjetas)} tarjetas...")
+    msg = m.reply(f"<b>✦ -「#{gate}</b>\nProcesando {len(tarjetas)} tarjetas... 」- ✦")
 
     resultados, total_deduct = [], 0
     bin_cache = {}
@@ -46,11 +46,11 @@ def mass_cmd(client, m):
     for i, ccs in enumerate(tarjetas, start=1):
         cc = "|".join(ccs)
 
-        msg.edit_text(f"""<b>{gate}</b>
+        msg.edit_text(f"""<b>✦ -「# {gate} 」- ✦</b>
 
-• Card: <code>{cc}</code>
-• Status: Checking [{i}/{len(tarjetas)}]
-• From: {m.from_user.first_name}
+✦ - Card: <code>{cc}</code>
+✦ - Status: Checking [{i}/{len(tarjetas)}]
+✦ - From: {m.from_user.first_name}
 """)
 
         bin6 = ccs[0][:6]
@@ -73,10 +73,10 @@ def mass_cmd(client, m):
 
         total_deduct += cr
         resultados.append(
-            f"<b>Card:</b> <code>{cc}</code>\n"
-            f"<b>Status:</b> {chk[0]}\n"
-            f"<b>Msg:</b> <code>{chk[1]}</code>\n"
-            f"<b>Country:</b> {country}"
+            f"<b>✦ - Card:</b> <code>{cc}</code>\n"
+            f"<b>✦ - Status:</b> {chk[0]}\n"
+            f"<b>✦ - Msg:</b> <code>{chk[1]}</code>\n"
+            f"<b>✦ - Country:</b> {country}"
         )
 
     if total_deduct:
@@ -84,12 +84,12 @@ def mass_cmd(client, m):
             {"id": user["id"]}, {"$inc": {"credits": -total_deduct}}
         )
 
-    msg.edit_text(f"""<b>{gate} Finalizado</b>
+    msg.edit_text(f"""<b>✦ -「# {gate} (Finalizado) 」- ✦</b>
 
 {"\n\n".join(resultados)}
 
-━━━━━━━━━━━━━━━━━━
-• Créditos: {total_deduct}
-• Tiempo: {time.time() - inicio:.2f}s
-• By: {m.from_user.first_name}
+— — — — — — — — — — — — —
+✦ - Créditos: {total_deduct}
+✦ - Tiempo: {time.time() - inicio:.2f}s
+✦ - By: {m.from_user.first_name}
 """)

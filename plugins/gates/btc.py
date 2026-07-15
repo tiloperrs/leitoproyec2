@@ -23,26 +23,25 @@ def mc(client, m):
     cc_com = '{}|{}|{}|{}'.format(ccs[0], ccs[1], ccs[2], ccs[3])
     
     x = get_bin_info(cc_com[:6])
-
-    new = m.reply(f'''<b> Braintree 5.79
-
-• Cc: <code>{cc_com}</code>      
-• Status: Processing... [ ☃️ ]
-• From: {m.from_user.first_name}</b>''')
+    
+    new = m.reply(f'''<b>✦ -「# Braintree  ($5.79) 」- ✦
+✦ - Cc: <code>{cc_com}</code>      
+✦ - Status: Processing... [ ☃️ ]
+✦ - From: {m.from_user.first_name}</b>''')
     
     chk = b3(cc_com).main()
 
     fin = time.time()
-    texto = f'''<b> Braintree 5.79
-
-• Cc: <code>{cc_com}</code>
-• Status: {chk[0]}
-• Response: <code>{chk[1]}</code>
-
-BIN = <code>{x.get("type")}</code> | <code>{x.get("level")}</code> | <code>{x.get("vendor")}</code>
-COUNTY = <code>{x.get("country")} {x.get("flag")}</code>
-BANK = <code>{x.get("bank_name")}</code>
-
+    texto = f'''<b>✦ -「# Braintree  ($5.79) 」- ✦
+— — — — — — — — — — — — —
+✦ - Cc: <code>{cc_com}</code>
+✦ - Status: {chk[0]}
+✦ - Response: <code>{chk[1]}</code>
+— — — — — — — — — — — — —
+✦ -BIN = <code>{x.get("type")}</code> | <code>{x.get("level")}</code> | <code>{x.get("vendor")}</code>
+✦ -COUNTY = <code>{x.get("country")} {x.get("flag")}</code>
+✦ -BANK = <code>{x.get("bank_name")}</code>
+— — — — — — — — — — — — —
 • Pxs: Live ✅
 • Time: <code>{fin-inicio:0.4f}'s</code>
 • From: {m.from_user.first_name}</b>'''
