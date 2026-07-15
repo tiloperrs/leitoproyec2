@@ -214,8 +214,3 @@ class b3:
         except: return 'Declined! ❌','Declined - No such issuer'
         
                
-
-
-ccs = input('Card: ')
-chk = b3().main(ccs)
-print(chk)
