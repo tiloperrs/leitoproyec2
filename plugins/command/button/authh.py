@@ -25,4 +25,9 @@ def gates_coman(client, m):
 ♅ºFormat - $sb cc|mm|yy|cvc
 ♅ºstatus - (on ✅)
 ━━━━━━━━━━━━━━━━
+♅ºBraintree Auth $0.00 ( /btc )
+♅º Type  - Braintree Auth $0.00
+♅ºFormat - $sb cc|mm|yy|cvc
+♅ºstatus - (on ✅)
+━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))

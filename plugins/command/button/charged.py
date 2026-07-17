@@ -15,8 +15,8 @@ Payflow Charged ( /pfw)
 ♅ºFormat  $pfw cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
-Braintree 5.79 ( /btc) 
-♅ºType   Braintree 5.79
+Payflow Charged 9.95$( /payf) 
+♅ºType   Payflow charged
 ♅ºFormat  $pfw cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━

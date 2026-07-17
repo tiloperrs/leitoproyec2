@@ -1,12 +1,13 @@
+
 from srca.configs import find_cards,antispam
-from gates.avspfw import avspfw1
+from gates.payflowch9 import payff
 import time 
 from db.mongo_client import MongoDB
 from srca.configs import addCommand
 
 from func_bin import get_bin_info
 
-@addCommand('pfa')
+@addCommand('payf')
 def mc(client, m):
     if MongoDB().query_group(m.chat.id) == None: return m.reply('Chat not Authorized.')
     querY = MongoDB().query_user(int(m.from_user.id))
@@ -22,15 +23,17 @@ def mc(client, m):
     cc_com = '{}|{}|{}|{}'.format(ccs[0], ccs[1], ccs[2], ccs[3])
     
     x = get_bin_info(cc_com[:6])
-    new = m.reply(f'''<b>✦ -「# Payflow  ($avs) 」- ✦
+
+    new = m.reply(f'''<b>✦ -「# Payflow Charged (9.95$) 」- ✦
 ✦ - Cc: <code>{cc_com}</code>      
-✦ - Status: Processing... [ ☃️ ]
+✦ - Status: Processing... [ ✦ ]
 ✦ - From: {m.from_user.first_name}</b>''')
     
-    chk = avspfw1(cc_com).main()
+    chk = payff(cc_com).main()
+
 
     fin = time.time()
-    texto = f'''<b>✦ -「# Payflow  ($avs) 」- ✦
+    texto = f'''<b>✦ -「Payflow Charged (9.95$) 」- ✦
 — — — — — — — — — — — — —
 ✦ - Cc: <code>{cc_com}</code>
 ✦ - Status: {chk[0]}

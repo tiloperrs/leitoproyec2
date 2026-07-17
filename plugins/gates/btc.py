@@ -1,6 +1,6 @@
 
 from srca.configs import find_cards,antispam
-from gates.btresauth import b3
+from gates.btresauth import b35
 import time 
 from db.mongo_client import MongoDB
 from srca.configs import addCommand
@@ -24,15 +24,15 @@ def mc(client, m):
     
     x = get_bin_info(cc_com[:6])
     
-    new = m.reply(f'''<b>✦ -「# Braintree  ($5.79) 」- ✦
+    new = m.reply(f'''<b>✦ -「# Braintree Auth ($0.00) 」- ✦
 ✦ - Cc: <code>{cc_com}</code>      
 ✦ - Status: Processing... [ ☃️ ]
 ✦ - From: {m.from_user.first_name}</b>''')
     
-    chk = b3(cc_com).main()
+    chk = b35(cc_com).main()
 
     fin = time.time()
-    texto = f'''<b>✦ -「# Braintree  ($5.79) 」- ✦
+    texto = f'''<b>✦ -「# Braintree Auth ($0.00) 」- ✦
 — — — — — — — — — — — — —
 ✦ - Cc: <code>{cc_com}</code>
 ✦ - Status: {chk[0]}
