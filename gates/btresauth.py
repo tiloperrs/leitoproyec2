@@ -80,7 +80,7 @@ class b35:
                 'sec-fetch-user': '?1',
                 'sec-gpc': '1',
                 'upgrade-insecure-requests': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
                 # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; sbjs_session=pgs%3D41%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2F',
             }
 
@@ -103,7 +103,7 @@ class b35:
                 'sec-fetch-user': '?1',
                 'sec-gpc': '1',
                 'upgrade-insecure-requests': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
                 # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; sbjs_session=pgs%3D45%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2F',
             }
 
@@ -130,7 +130,7 @@ class b35:
                 'sec-fetch-user': '?1',
                 'sec-gpc': '1',
                 'upgrade-insecure-requests': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
                 # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D47%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fpayment-methods%2F',
             }
 
@@ -152,7 +152,7 @@ class b35:
                 'sec-fetch-mode': 'cors',
                 'sec-fetch-site': 'same-origin',
                 'sec-gpc': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
                 'x-requested-with': 'XMLHttpRequest',
                 # 'cookie': 'wordpress_sec_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ce22466f6092c3367cdb760a97a8a0c7fdc2f2f4842e414ff3012d655d66c9a2f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D48%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fadd-payment-method%2F',
             }
@@ -187,7 +187,7 @@ class b35:
                 'sec-fetch-mode': 'cors',
                 'sec-fetch-site': 'cross-site',
                 'sec-gpc': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
             }
 
             json_data = {
@@ -233,7 +233,7 @@ class b35:
                 'sec-fetch-user': '?1',
                 'sec-gpc': '1',
                 'upgrade-insecure-requests': '1',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36',
+                'user-agent': Agent,
                 # 'cookie': 'sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2026-07-16%2020%3A39%3A00%7C%7C%7Cep%3Dhttps%3A%2F%2Frchtolive.com%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cmtke%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F150.0.0.0%20Safari%2F537.36; mtk_src_trk=%7B%22type%22%3A%22typein%22%2C%22url%22%3A%22(none)%22%2C%22mtke%22%3A%22(none)%22%2C%22utm_campaign%22%3A%22(none)%22%2C%22utm_source%22%3A%22(direct)%22%2C%22utm_medium%22%3A%22(none)%22%2C%22utm_content%22%3A%22(none)%22%2C%22utm_id%22%3A%22(none)%22%2C%22utm_term%22%3A%22(none)%22%2C%22session_entry%22%3A%22https%3A%2F%2Frchtolive.com%2F%22%2C%22session_start_time%22%3A%222026-07-16%2020%3A39%3A00%22%2C%22session_pages%22%3A%221%22%2C%22session_count%22%3A%221%22%7D; pl_vid=eyJpZCI6IjM1NGQ0NmYxLWM3MDEtNDllYy1hYzhjLTg5ODZlY2FhMjM4ZiIsImNyZWF0ZWRBdCI6MTc4NDIzNDM0MTk4Mn0%3D; wpf_ref=%7B%22original_ref%22%3A%22https%3A%5C%2F%5C%2Frchtolive.com%5C%2Fmy-account%5C%2F%22%7D; woocommerce_recently_viewed=3493%7C12455%7C12433; wordpress_logged_in_e308604c48530797675d5ec81dc23d4f=ldfl.dsdasd-5140%7C1784410723%7CpwgCyelh2wtnw6HpQBJaxmlSuOy6sQ8s0I673XCWA7V%7Ca149bf61b7204b046a7063e3812d38161557f57a60fb4f22b1ed2c9566b8441f; sbjs_session=pgs%3D48%7C%7C%7Ccpg%3Dhttps%3A%2F%2Frchtolive.com%2Fmy-account%2Fadd-payment-method%2F',
             }
 
@@ -271,3 +271,5 @@ class b35:
             else:
                 return 'Declined ❌', err
         except:return 'Declined ❌', 'Unknown Error'
+chk = b35("5256103697765164|03|2028|255").main()
+print(chk)
