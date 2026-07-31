@@ -8,7 +8,7 @@ class Kiyotaka_chk():
             "Kiyotakac_bot",
             api_id    =  33276466,#API ID de Telegram App
             api_hash  = '6045dd5caa167e3e60a0c9a52ca9a0a2',#API Hash de Telegram app
-            bot_token = '8684644836:AAEhLqpG4eUjaDoQkswKfX0iAvKhJcZ0wrY',#Token bot Telegram
+            bot_token = '8684644836:AAG90NXeEZ3SYsTlLpBalL3hiy1swCoRaLY',#Token bot Telegram
             plugins   =  dict(root="plugins"))
 
         @self.app.on_callback_query()
