@@ -49,15 +49,15 @@ class b35:
         try:
             match random.randint(1, 5):
                 case 1:
-                    email = "ledeni6383@luckfeed.com"
+                    email = "cafalok207@murkstar.com"
                 case 2:
-                    email = "totajid239@luckfeed.com"
+                    email = "banes42563@rohoza.com"
                 case 3:
-                    email = "jiwoxes871@luckfeed.com"
+                    email = "tinag36418@murkstar.com"
                 case 4:
-                    email = "wexik14403@luckfeed.com"
+                    email = "rafexo6469@murkstar.com"
                 case 5:
-                    email = "fihatax235@luckfeed.com"
+                    email = "fefifi2552@netiren.com"
             session = Session()
             def generar_correo():
                 return f"{names.get_first_name()}{names.get_last_name()}{random.randint(1000000,9999999)}@gmail.com"
