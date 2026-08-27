@@ -10,9 +10,9 @@ def gates_coman(client, m):
     m.edit_message_text('''
 <b>𝐆𝐚𝐭𝐞𝐫𝐰𝐚𝐲𝐬 mass 🍫
 ━━━━━━━━━━━━━━━━
-Payflow avs Charged ( /mass) 
-♅ºType   Payflow avs
-♅ºFormat  $mass cc|mm|yy|cvc
+Stripe Charged 15$( /stmas15) 
+♅ºType   Stripe Charged
+♅ºFormat  $mass15 cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
 Stripe auth ( /stmas)
@@ -21,13 +21,13 @@ Stripe auth ( /stmas)
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
 Payflow Charged 10.58( /mass2) 
-♅ºType   Payflow avs
-♅ºFormat  $mass cc|mm|yy|cvc
+♅ºType   Payflow 
+♅ºFormat  $mass2 cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
 Stripe auth ( /stmas1)
 ♅ºType   Stripe auth
-♅ºFormat  $stmas cc|mm|yy|cvc
+♅ºFormat  $stmas1 cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))
