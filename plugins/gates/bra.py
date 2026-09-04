@@ -7,7 +7,7 @@ from srca.configs import addCommand
 
 from func_bin import get_bin_info
 
-@addCommand('btc')
+@addCommand('bra')
 def mc(client, m):
     if MongoDB().query_group(m.chat.id) == None: return m.reply('Chat not Authorized.')
     querY = MongoDB().query_user(int(m.from_user.id))
