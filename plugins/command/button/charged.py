@@ -25,9 +25,9 @@ paypal 0.7 ( /pp)
 ♅ºFormat  $pp cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
-ebizcharge ( /ebz) 
-♅ºType   paypal 0.7
-♅ºFormat  $pp cc|mm|yy|cvc
+Braintree ($11.99) ( /bra) 
+♅ºType   Braintree ($11.99)
+♅ºFormat  $bra cc|mm|yy|cvc
 ♅ºstatus   (on ✅)
 ━━━━━━━━━━━━━━━━
 </b>''',reply_markup=atrasgt(m.from_user.id))
