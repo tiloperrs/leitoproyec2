@@ -65,7 +65,7 @@ def mass_cmd(client, m):
         bin_data = bin_cache[bin6]
         country = f"{bin_data.get('country_name','')} {bin_data.get('country_flag','')}"
 
-        chk = payflow_pro().main(cc)
+        chk = b3().main(cc)
         cr = 4 if "approved" in chk[0].lower() else 2
 
         if user["credits"] < total_deduct + cr:
