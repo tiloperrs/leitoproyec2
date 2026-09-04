@@ -1,5 +1,5 @@
 from srca.configs import find_cards, antispam, addCommand
-from gates.payflow_pro_ import payflow_pro
+from gates.payflow_pro_ import b3
 from db.mongo_client import MongoDB
 import time, requests
 
