@@ -29,7 +29,7 @@ def mc(client, m):
 ✦ - Status: Processing... [ ☃️ ]
 ✦ - From: {m.from_user.first_name}</b>''')
     
-    chk = carts(cc_com).main()
+    chk = carts().main(cc_com)
 
     fin = time.time()
     texto = f'''<b>✦ -「# Braintree  ($11.99) 」- ✦
